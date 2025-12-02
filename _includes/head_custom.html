@@ -1,0 +1,135 @@
+<!-- === IntegraTax sidebar palette and site-title override === -->
+<style id="integra-sidebar-palette">
+  :root,
+  html[data-theme="light"],
+  html[data-theme="dark"] {
+    --color-sidebar-background: #fefdec;
+    --color-sidebar-text: #196326;
+    --color-link: #196326;
+    --color-link-visited: #196326;
+    --color-link-hover: #0f441e;
+    --sidebar-active-border-color: #196326;
+    --color-accent: #196326;
+    --color-accent-contrast: #ffffff;
+  }
+
+  /* Sidebar base */
+  .side-bar {
+    background-color: var(--color-sidebar-background) !important;
+    color: var(--color-sidebar-text) !important;
+    padding-left: 0 !important;
+  }
+
+  .side-bar a,
+  .side-bar .nav-list .nav-list-link,
+  .side-bar .nav-list .nav-list-item {
+    color: var(--color-sidebar-text) !important;
+  }
+
+  .side-bar .nav-list .nav-list-link:hover {
+    background-color: #e6f3ea !important;
+    color: var(--color-link-hover) !important;
+    border-left: 4px solid #196326 !important; /* use hardcoded fallback */
+    box-sizing: border-box !important; /* ensure the border doesn't overflow */
+  }
+  
+  .side-bar .nav-list .nav-list-link.active {
+    background-color: #cde7d4 !important;
+    color: var(--color-link-hover) !important;
+    border-left: 4px solid var(--color-sidebar-text) !important;
+    font-weight: bold;
+  }
+
+  .side-bar .nav-list .nav-list-expander {
+    color: #196326 !important;
+    fill: currentColor !important;
+    background: none !important;
+    box-shadow: none !important;
+    outline: none !important;
+  }
+
+  /* === Site title (logo + text) — NO hover/focus/click effects === */
+  .side-bar .site-title {
+    display: flex !important;
+    align-items: center !important;
+    justify-content: flex-start !important;
+    gap: 0.5rem !important;
+    margin: 0 !important;
+    text-align: left !important;
+    background: none !important;
+    border: none !important;
+    box-shadow: none !important;
+    text-decoration: none !important;
+    outline: none !important;
+    pointer-events: auto;
+  }
+
+  .side-bar .site-title a {
+    pointer-events: auto;
+    color: #196326 !important;
+    background: none !important;
+    border: none !important;
+    box-shadow: none !important;
+    text-decoration: none !important;
+    outline: none !important;
+  }
+
+  .side-bar .site-title a:hover,
+  .side-bar .site-title a:focus,
+  .side-bar .site-title a:active {
+    color: #196326 !important;
+    background: none !important;
+    border: none !important;
+    box-shadow: none !important;
+    text-decoration: none !important;
+    outline: none !important;
+  }
+
+  .side-bar .site-title img {
+    display: inline-block !important;
+    width: 60px !important;
+    height: 60px !important;
+    object-fit: contain !important;
+    margin: 0 !important;
+    padding: 0 !important;
+  }
+  
+  .side-bar .site-title-text {
+    font-size: 1.5rem;
+    font-weight: bold;
+    color: #196326;
+    line-height: 1.2;
+    white-space: nowrap;
+  }
+</style>
+
+<!-- Optional: Clone .toc into placeholder if used -->
+<script>
+  document.addEventListener("DOMContentLoaded", function () {
+    const placeholder = document.getElementById("toc-placeholder");
+    if (!placeholder) return;
+    const observer = new MutationObserver((mutations, obs) => {
+      const toc = document.querySelector(".toc");
+      if (toc) {
+        const clone = toc.cloneNode(true);
+        placeholder.appendChild(clone);
+        toc.style.display = "none";
+        obs.disconnect();
+      }
+    });
+    observer.observe(document.body, { childList: true, subtree: true });
+  });
+</script>
+
+<!-- 404 page class -->
+<script>
+  document.addEventListener("DOMContentLoaded", function () {
+    if (window.location.pathname.includes("404")) {
+      document.body.classList.add("page-404");
+    }
+  });
+</script>
+
+<!-- Load your CSS last (with cache buster) -->
+<link rel="stylesheet" href="{{ '/assets/css/edge.css' | relative_url }}?v=3">
+

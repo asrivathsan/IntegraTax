@@ -22,8 +22,8 @@ title: IntegraTax
 email: Amrita.Srivathsan@mfn.berlin
 description: >- # this means to ignore newlines until "baseurl:"
   Documentation for using IntegraTax.
-baseurl: "https://asrivathsan.github.io" # the subpath of your site, e.g. /blog
-url: "/IntegraTax" # the base hostname & protocol for your site, e.g. http://example.com
+baseurl: "/IntegraTax" # the subpath of your site, e.g. /blog
+url: "https://asrivathsan.github.io" # the base hostname & protocol for your site, e.g. http://example.com
 
 # Build settings
 remote_theme: just-the-docs/just-the-docs

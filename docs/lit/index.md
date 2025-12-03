@@ -52,7 +52,7 @@ If not, please see the [Clustering section](/using/#clustering) under *How to us
 **1.** Click **“Choose file”** in the `.html` dendrogram viewer and upload your `.itv` file.  
    You should now see a dendrogram with coloured branches and nodes.  
 
-   <img src="assets/img/visualisationoverview.png" alt="Load LIT file" width="700">
+   <img src="{{ '/assets/img/visualisationoverview.png' | relative_url }}" alt="Load LIT file" width="700">
 
 <br>
 
@@ -61,11 +61,11 @@ If not, please see the [Clustering section](/using/#clustering) under *How to us
    - **Instability max/min %:** defaults are the highest percentages that are less than 3% and 1% respectively (e.g. 2.43% and 0.96%)
 Both variables affect how clusters are categorised (Potentially congruent or Potentially incongruent).  
 
-<img src="assets/img/LITvideo_instabilityvalues.gif" alt="Adjust LIT values" width="700"><br>
+<img src="{{ '/assets/img/LITvideo_instabilityvalues.gif' | relative_url }}" alt="Adjust LIT values" width="700"><br>
    
    The **"Instability zone: ON/OFF"** button in the "Instability" section highlights the area within the selected LIT range in green.
 
-   <img src="assets/img/LITvideo_instabilityarea.gif" alt="Show/hide highlighted LIT boundary" width="700">
+   <img src="{{ '/assets/img/LITvideo_instabilityarea.gif' | relative_url }}" alt="Show/hide highlighted LIT boundary" width="700">
 
 <br>
 
@@ -76,7 +76,7 @@ Both variables affect how clusters are categorised (Potentially congruent or Pot
 
    The red sequence headers are the LIT-selected specimens for checking.
 
-   <img src="assets/img/clusterexample.png" alt="Cluster colour legend" width="700">
+   <img src="{{ '/assets/img/clusterexample.png' | relative_url }}" alt="Cluster colour legend" width="700">
 
 <br>
 
@@ -99,7 +99,7 @@ be BMY0001343. Check that alternative specimen and the other LIT selected specim
 **5.** Track your verification progress by [right-clicking](/using/#right-click-options) the specimen nodes.  
    You can mark them as verified/cannot be verified, male/female, and other special conditions.
 
-   <img src="assets/img/rightclickoptions.png" alt="Verify specimen" width="250">
+   <img src="{{ '/assets/img/rightclickoptions.png' | relative_url }}" alt="Verify specimen" width="250">
 
 <br>
 
@@ -107,7 +107,7 @@ be BMY0001343. Check that alternative specimen and the other LIT selected specim
    to verify it or assign a species name/code.  
    ✅ The entire cluster (nodes, branches, labels) will turn green.
 
-   <img src="assets/img/verifyingclusters.gif" alt="Verify cluster" width="700">
+   <img src="{{ '/assets/img/verifyingclusters.gif' | relative_url }}" alt="Verify cluster" width="700">
 
 <br>
 

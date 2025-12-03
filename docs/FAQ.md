@@ -22,7 +22,7 @@ has_toc: false
 
 ### Why can't I open IntegraTax on macOS?
 
-Didn't read the Installation page huh? ;) [Click here to resolve the issue.](/installation/)  
+Didn't read the Installation page huh? ;) [Click here to resolve the issue.]({{ "/installation/" | relative_url }})
 
 ---
 
@@ -46,7 +46,7 @@ Check if the fasta file name or folder names that the external sequences are in 
 Just click refresh and reload the `.itv` file in the Choose File button.
 
 ### My cluster only has a single haplotype. How do I use the right click options on the cluster node instead of the specimen node?
-[Left-click](/using/#right-click-options) the node and it will change the right-click options. Left-clicking again on the same node will revert the options.
+[Left-click]({{"/using/#right-click-options" | relative_url}}) the node and it will change the right-click options. Left-clicking again on the same node will revert the options.
 
 
 ---
@@ -61,7 +61,7 @@ However, one could copy the sequences of the cluster and build a haplotype netwo
 
 ## **Still have unanswered questions?**
 
-Please raise an issue on our [github page](https://github.com)!
+Please raise an issue on our [github page](https://github.com/asrivathsan/IntegraTax)!
 
 ---
 

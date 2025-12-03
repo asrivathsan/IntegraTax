@@ -42,7 +42,7 @@ Check if the fasta file name or folder names that the external sequences are in 
 Just click refresh and reload the `.itv` file in the Choose File button.
 
 ### My cluster only has a single haplotype. How do I use the right click options on the cluster node instead of the specimen node?
-[Left-click]({{"/using/#right-click-options" | relative_url}}) the node and it will change the right-click options. Left-clicking again on the same node will revert the options.
+[Left-click]({{"/using/#rightclick" | relative_url}}) the node and it will change the right-click options. Left-clicking again on the same node will revert the options.
 
 
 ---

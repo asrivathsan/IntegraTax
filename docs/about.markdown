@@ -5,7 +5,7 @@ permalink: /about/
 ---
 <img src="{{ '/assets/img/softwarelogonew.png' | relative_url }}" alt="IntegraTax Logo" width="500">
 
-**GitHub:** [https://github.com/asrivathsan/IntegraTax/](https://github.com/asrivathsan/IntegraTax)
+**GitHub:** [https://github.com/asrivathsan/IntegraTax](https://github.com/asrivathsan/IntegraTax)
 <br>
 **Youtube:** [Integrative Biodiversity Discovery Channel](https://www.youtube.com/@integrativebiodiversitydis5672)
 <br>

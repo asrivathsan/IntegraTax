@@ -45,7 +45,7 @@ You should have:
 - `.itv` **file** from clustering output
 - `.html` **dendrogram viewer** opened
 
-If not, please see the [Clustering section](/using/#clustering) under *How to use*.
+If not, please see the [Clustering section]({{ "/using/#clustering" | relative_url }}) under *How to use*.
 
 ---
 
@@ -84,7 +84,7 @@ Both variables affect how clusters are categorised (Potentially congruent or Pot
 Refer to [cluster validation case studies](#lit-cluster-validation-case-studies) below for examples.
    
    If a recommended specimen cannot be checked (e.g. wrong sex, contamination, damage),  
-   [right-click](/using/#right-click-options) the node and assign a reason. Then, select 
+   [right-click]({{"/#right-click-options" | relative_url }}) the node and assign a reason. Then, select 
    another specimen from the **same haplotype**. If none are usable, choose one from the **next closest haplotype**.
 
 **For example:** If specimen BMY0001528 cannot be verified because it is a female specimen, 
@@ -96,14 +96,14 @@ be BMY0001343. Check that alternative specimen and the other LIT selected specim
 
 <br>
 
-**5.** Track your verification progress by [right-clicking](/using/#right-click-options) the specimen nodes.  
+**5.** Track your verification progress by [right-clicking]({{ "/#right-click-options" | relative_url }}) the specimen nodes.  
    You can mark them as verified/cannot be verified, male/female, and other special conditions.
 
    <img src="{{ '/assets/img/rightclickoptions.png' | relative_url }}" alt="Verify specimen" width="250">
 
 <br>
 
-**6.** Once a cluster is validated as a species, [right-click](/using/#right-click-options) the cluster node  
+**6.** Once a cluster is validated as a species, [right-click]({{"/using/#right-click-options" | relative_url }}) the cluster node  
    to verify it or assign a species name/code.  
    ✅ The entire cluster (nodes, branches, labels) will turn green.
 
@@ -117,11 +117,11 @@ be BMY0001343. Check that alternative specimen and the other LIT selected specim
 
 **8.** Want to pause and resume later?  
    Click the **“Save”** button to export a `.csv` file with your progress.  
-   [Learn how to save and reload](/using/#saving-your-progress).
+   [Learn how to save and reload]({{ "/using/#saving-your-progress" | relative_url }}).
 
 <br>
 
-**9.** **[Export your updated dataset into multiple formats](/using/#export-formats-available)** 
+**9.** **[Export your updated dataset into multiple formats]({{ "/using/#export-formats-available" | relative_url }})** 
 containing information that you have added during the verification process.
 
 

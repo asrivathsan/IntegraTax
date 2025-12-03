@@ -65,7 +65,7 @@ these files are called **external sequences** and IntegraTax can add those seque
 ## **Clustering**
 
 #### **1. Open IntegraTax.** {#step-1}  
-Haven’t installed it yet? [Go to the installation page](/installation/).
+Haven’t installed it yet? [Go to the installation page]({{ "/installation/" | relative_url }}).
 <br>
 
 #### **2. Drag and drop your FASTA file into the IntegraTax GUI.** {#step-2}  
@@ -348,7 +348,7 @@ $$
 <br>
 
 #### **<u>Color & Text</u>** {#colourtext}
-Cluster and node colours in the dendrogram are based on the [**LIT workflow**](/lit/) by default.
+Cluster and node colours in the dendrogram are based on the [**LIT workflow**]({{ "/lit/" | relative_url }}) by default.
 
 You can edit the colours of the nodes, cluster(subtree) branches, and text here:
 - **Subtree colour** (*PI/nonPI* / *Binomial name* / *None*)
@@ -374,7 +374,7 @@ Adjust the dendrogram’s scale and view thresholds for better interpretation of
 #### **<u>Instability</u>** {#instability}
 Adjust your Instability maximum and minimum percentages and maximum pairwise distance (Max P) here.
 You can also turn the instability zone (light green background of the dendrogram) on or off.
-For more information about Max P and Instability, click [**here**](/lit/)!
+For more information about Max P and Instability, click [**here**]({{ "/lit/" | relative_url }})!
 
 <br>
 
@@ -420,7 +420,7 @@ and perform various actions on individual specimens or entire clusters.
 - **Freeze / Unfreeze** – Prevent or allow further changes to the node
 - **Undo** – Revert the most recent change done to the node
 
-If the specimen (terminal) node and cluster (internal) node is shared, **[left-click](/faq/#visualisation)**
+If the specimen (terminal) node and cluster (internal) node is shared, **[left-click]({{ "/faq/#visualisation" | relative_url }})**
 the node to switch between both right-click options.
 
 ---
@@ -454,7 +454,7 @@ To resume your work, upload the `.itv` using the **“Choose File”** button.
   - **ID:** Sequence header
   - **SpName:** Corresponding species name that IntegraTax has detected or you have assigned  
   - **Haplotype:** The name of the haplotype cluster the particular specimen is in based on the "lowest" sequence name 
-  - **LIT selection:** Specimens that IntegraTax suggests for checking based on [LIT](/lit/#what-is-lit)
+  - **LIT selection:** Specimens that IntegraTax suggests for checking based on [LIT]({{ "/lit/#what-is-lit" | relative_url }})
   - **Cluster:** Cluster number based on your chosen [percentage threshold](#threshold)
   - **Sex:** Male or female based on your input from the [right-click options](#rightclick)
   - **Holotype:** Holotype or not(blank) based on your input from the [right-click options](#rightclick)

@@ -5,7 +5,7 @@ permalink: /about/
 ---
 <img src="{{ '/assets/img/softwarelogonew.png' | relative_url }}" alt="IntegraTax Logo" width="500">
 
-**GitHub:** [https://github.com/](https://github.com/)
+**GitHub:** [[https://asrivathsan.github.io/IntegraTax/](https://asrivathsan.github.io/IntegraTax/)]
 <br>
 **Youtube:** [Integrative Biodiversity Discovery Channel](https://www.youtube.com/@integrativebiodiversitydis5672)
 <br>
@@ -21,6 +21,6 @@ Srivathsan A.,..... Meier, R. 202X. XXX....
 
 
 
-© Copyright 
+© 2025 
 <br>
 <img src="{{ '/assets/img/cibd_museumlogo.png' | relative_url }}" alt="CIBD and Museum logo" width="500">

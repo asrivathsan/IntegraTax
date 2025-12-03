@@ -16,10 +16,10 @@ has_toc: false
 - [What IntegraTax does](#what-integratax-does)
 - [Input files needed](#input-files-needed)
 - [Clustering](#clustering)
-  - [Without external sequences](#without-external-sequences)
+  - [Without identified reference sequences](#without-external-sequences)
     - [Aligned sequences](#noext-step-5)
     - [Unaligned sequences](#noext-step-6)
-  - [With external sequences](#with-external-sequences)
+  - [With identified reference sequences](#with-external-sequences)
     - [Alignment modes](#ext-step-6)
     - [BLAST search](#ext-step-9)
   - [Clustering output folder](#clustering-output-files)
@@ -49,8 +49,8 @@ IntegraTax requires at most **two input files**:
 
 - Keep sequence headers ≤ **150 characters**.
 
-NOTE: If you have fasta sequences that are separate from your project (e.g. from NCBI genbank or BOLD or sequences from other projects), 
-these files are called **external sequences** and IntegraTax can add those sequences to the clustering.
+NOTE: If you have a 2nd fasta file with identified reference sequences (e.g. from NCBI genbank or BOLD or sequences from other projects), 
+IntegraTax can add those sequences to the clustering in [Step 3](#with-external-sequences).
 
 ### 2. Species name file (optional)
 
@@ -73,16 +73,16 @@ Haven’t installed it yet? [Go to the installation page]({{ "/installation/" | 
 <br>
 
 #### **3. Depending on your data, click the following for the next instructions:** {#step-3}
-- [Without external sequences](#without-external-sequences)
-- [With external sequences](#with-external-sequences)
+- [Without identified reference sequences](#without-external-sequences)
+- [With identified reference sequences](#with-external-sequences)
 <br>
 
 ---
 
-### **Without external sequences** {#without-external-sequences}
+### **Without identified reference sequences** {#without-external-sequences}
 
 #### **4. Click "no"** {#noext-step-4}  
-<img src="{{ '/assets/img/ExternalSequencesPrompt_no_cropped.png' | relative_url }}" alt="Alignment Prompt" width="500"> 
+<img src="{{ '/assets/img/2ndFastaFilePrompt.png' | relative_url }}" alt="Alignment Prompt" width="500"> 
 <br>
 
 #### **5. If you have aligned sequences, you will see this pop-up. Otherwise, proceed to [Step 6](#noext-step-6)** {#noext-step-5}  
@@ -92,23 +92,24 @@ Haven’t installed it yet? [Go to the installation page]({{ "/installation/" | 
 <br>
 
 #### **6. Select pairwise alignment mode** {#noext-step-6}  
-<img src="{{ '/assets/img/homologousornot.png' | relative_url }}" alt="Homologous Unaligned" width="700">  
+<img src="{{ '/assets/img/homologousornot_new.png' | relative_url }}" alt="Homologous Unaligned" width="700">  
 - **Homologous sequences** — Go to **[Step 9](#noext-step-9)**. Use this if all sequences represent the **same gene region** with minor start/end variation (typical *COI* barcode datasets).  
 - **Find homology** — Go to **[Step 7](#noext-step-7)**. Use this for **non-overlapping fragments** or highly variable lengths/coverage.
 <br>
 
 #### **7. If you click "Find homology"**, set the following variables: {#noext-step-7}
 - Output prefix  
-- Min coverage  
-- Max N fraction  
-- Rep count  
-- Min length frac  
-- KDE grid  
-- KDE bandwidth  
-- KDE q_low  
-- KDE min prominence  
+- Max proportion of N  
+- Number of sequences for 2nd pass
+- Min length fraction
+- Bandwidth
+- KDE q_low
+- KDE q_high
+- Min prominence
+- Fixed threshold pass 1
+- Fixed threshold pass 2
 
-<img src="{{ '/assets/img/homologysettings.png' | relative_url }}" alt="Find Homology settings" width="500">  
+<img src="{{ '/assets/img/homologysettings_new.png' | relative_url }}" alt="Find Homology settings" width="500">  
 Once done, click **Ok**.
 
 <br>
@@ -116,13 +117,13 @@ Once done, click **Ok**.
 #### **8. Once homology search is done:** {#noext-step-8}
 
 - Click **"Save log..."** to save the log.  
-  <img src="{{ '/assets/img/Homologysearchwindow.png' | relative_url }}" alt="Finish here message" width="700">
+  <img src="{{ '/assets/img/Homologysearchwindow_new.png' | relative_url }}" alt="Finish here message" width="700">
 
 - Click **"Finish here"** if you want to end the process and not continue with clustering. A pop-up reminds you to review results in the "Homology" folder of the output folder. **You will then be returned to the start page.**  
   <img src="{{ '/assets/img/Homologysearch_finishhere.png' | relative_url }}" alt="Finish here message" width="500">
 
 - Or click **"Proceed to clustering"** to move to the clustering step (Continue to **[Step 9](#noext-step-9)**).  
-  <img src="{{ '/assets/img/Homologysearch_proceedtoclustering.png' | relative_url }}" alt="Proceed to clustering message" width="500">
+  <img src="{{ '/assets/img/Homologysearch_proceedtoclustering_new.png' | relative_url }}" alt="Proceed to clustering message" width="500">
 
 <br>
 
@@ -156,10 +157,10 @@ the dendrogram viewer `.html` will **open automatically** for visualisation.
 
 ---
 
-### **With external sequences** {#with-external-sequences}
+### **With identified reference sequences** {#with-external-sequences}
 
 #### **4. Click "Select"** {#ext-step-4}  
-<img src="{{ '/assets/img/ExternalSequencesPrompt_select_cropped.png' | relative_url }}" alt="Alignment Prompt" width="500"> 
+<img src="{{ '/assets/img/2ndFastaFilePrompt.png' | relative_url }}" alt="Alignment Prompt" width="500"> 
 <br>
 
 #### **5. Select the species you wish to include** {#ext-step-5}  
@@ -170,7 +171,7 @@ Unselect any unwanted species and click **Proceed**.
 
 #### **6. Select "BLAST based homology search"** {#ext-step-6}  
 <img src="{{ '/assets/img/Externalsequences_alignmentmode.png' | relative_url }}" alt="Alignment mode" width="500"> 
-<br>At this stage, ensure that the names of the folders where your external sequences are does 
+<br>At this stage, ensure that the names of the folders where your 2nd fasta file is does 
 not have spaces. For example, in the directory `/Users/Name/Desktop/GenBank Sequences/Mycetophilidae Sequences`, 
 remove the space in `GenBank Sequences` and `Mycetophilidae Sequences` or replace them with another character. 
 If there are spaces in the directory, the BLAST based homology search will **fail**!
@@ -212,41 +213,42 @@ the dendrogram viewer `.html` will **open automatically** for visualisation.
 
 ---
 
-### **Other Homology Search Options with external sequences** {#otheroptions}
+### **Other Homology Search Options with identified reference sequences** {#otheroptions}
 <img src="{{ '/assets/img/Externalsequences_alignmentmode_otheroptions.png' | relative_url }}" alt="Alignment mode" width="500">  
 Not the right option for you? Return to Step 6 [here](#ext-step-6)!
 
 - **Find homology exhaustively**
 
 	- **If you click "Find homology exhaustively"**, set the following variables: 
-		- Output prefix  
-		- Min coverage  
-		- Max N fraction  
-		- Rep count  
-		- Min length frac  
-		- KDE grid  
-		- KDE bandwidth  
-		- KDE q_low  
-		- KDE min prominence  
+		- Output prefix
+  		- Max proportion of N  
+		- Number of sequences for 2nd pass
+		- Min length fraction
+		- Bandwidth
+		- KDE q_low
+		- KDE q_high
+		- Min prominence
+		- Fixed threshold pass 1
+		- Fixed threshold pass 2
 	 
-	 <img src="{{ '/assets/img/homologysettings.png' | relative_url }}" alt="Find Homology settings" width="500">  
+	 <img src="{{ '/assets/img/homologysettings_new.png' | relative_url }}" alt="Find Homology settings" width="500">  
 	 Once done, click **Ok**.
 	<br>
 	
 	- **Once homology search is done:** 
 	 
 		- Click **"Save log..."** to save the log.  
-	   <img src="{{ '/assets/img/Homologysearchwindow.png' | relative_url }}" alt="Finish here message" width="700">
+	   <img src="{{ '/assets/img/Homologysearchwindow_new.png' | relative_url }}" alt="Finish here message" width="700">
 	 
 		- Click **"Finish here"** to stop and review the "Homology" folder (you’ll return to the start page).  
 	   <img src="{{ '/assets/img/Homologysearch_finishhere.png' | relative_url }}" alt="Finish here message" width="500">
 	 
 		- Or **"Proceed to clustering"** (Continue to **[Step 8](#ext-step-8)**).  
-	   <img src="{{ '/assets/img/Homologysearch_proceedtoclustering.png' | relative_url }}" alt="Proceed to clustering message" width="500">
+	   <img src="{{ '/assets/img/Homologysearch_proceedtoclustering_new.png' | relative_url }}" alt="Proceed to clustering message" width="500">
  	<br>
 	
 - **Assume homology with my sequences** — Go to **[Step 8](#ext-step-8)**  
-Use this only when you are **absolutely certain** that your external sequences are homologous to your project sequences!!
+Use this only when you are **absolutely certain** that your identified reference sequences are homologous to your project sequences!!
 
 
 ---
@@ -259,8 +261,8 @@ You will receive a nested folder (e.g. `IntegraTaxOut_20251007_101901`) in the s
 <br>**1.** `.itv` – used for dendrogram visualisation
 <br>**2.** `IntegraTaxViz.html` – Visualisation of your dendrogram in `.html` format
 <br>**3.** `bins.txt` – 
-<br>**4.** `external.filtered.fa` (If you have external sequences) – A fasta file containing your filtered external sequences (after the blast homology search)
-<br>**5.** `combined.fa` (If you have external sequences) – A combined fasta file containing your project sequences and your filtered external sequences (after the blast homology search)
+<br>**4.** `external.filtered.fa` (If you have identified reference sequences) – A fasta file containing your filtered identified reference sequences (after the blast homology search)
+<br>**5.** `combined.fa` (If you have identified reference sequences) – A combined fasta file containing your project sequences and your filtered identified reference sequences (after the blast homology search)
 
 **FOLDERS**
 <br>**1.** `cluster` – Contains `iddict.txt`(mapping of IDs) and `_clusterlist`(Shows which sequences group into clusters across different distance thresholds)

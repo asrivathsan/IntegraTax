@@ -58,7 +58,7 @@ these files are called **external sequences** and IntegraTax can add those seque
 - Format: A `.csv` file containing species names that corresponds to your sequence headers.
 **Example:** Column A is your sequence header, column B is your species name.
 
-<img src="/assets/img/speciesnamefile.png" alt="Species Name File" width="700"><br>
+<img src="assets/img/speciesnamefile.png" alt="Species Name File" width="700"><br>
 
 ---
 
@@ -69,7 +69,7 @@ Haven’t installed it yet? [Go to the installation page](/installation/).
 <br>
 
 #### **2. Drag and drop your FASTA file into the IntegraTax GUI.** {#step-2}  
-<img src="/assets/img/DragAndDrop.gif" alt="Drag and Drop FASTA" width="700"><br>
+<img src="assets/img/DragAndDrop.gif" alt="Drag and Drop FASTA" width="700"><br>
 <br>
 
 #### **3. Depending on your data, click the following for the next instructions:** {#step-3}
@@ -82,17 +82,17 @@ Haven’t installed it yet? [Go to the installation page](/installation/).
 ### **Without external sequences** {#without-external-sequences}
 
 #### **4. Click "no"** {#noext-step-4}  
-<img src="/assets/img/ExternalSequencesPrompt_no_cropped.png" alt="Alignment Prompt" width="500"> 
+<img src="assets/img/ExternalSequencesPrompt_no_cropped.png" alt="Alignment Prompt" width="500"> 
 <br>
 
 #### **5. If you have aligned sequences, you will see this pop-up. Otherwise, proceed to [Step 6](#noext-step-6)** {#noext-step-5}  
-<img src="/assets/img/AlignmentPrompt1_cropped.png" alt="Alignment Prompt" width="500">  
+<img src="assets/img/AlignmentPrompt1_cropped.png" alt="Alignment Prompt" width="500">  
 - If your sequences are already aligned, select **Yes (Aligned)** and proceed to **[Step 10](#noext-step-10)**.  
 - Otherwise, select **No (Pairwise)** and proceed to **[Step 6](#noext-step-6)**.
 <br>
 
 #### **6. Select pairwise alignment mode** {#noext-step-6}  
-<img src="/assets/img/homologousornot.png" alt="Homologous Unaligned" width="700">  
+<img src="assets/img/homologousornot.png" alt="Homologous Unaligned" width="700">  
 - **Homologous sequences** — Go to **[Step 9](#noext-step-9)**. Use this if all sequences represent the **same gene region** with minor start/end variation (typical *COI* barcode datasets).  
 - **Find homology** — Go to **[Step 7](#noext-step-7)**. Use this for **non-overlapping fragments** or highly variable lengths/coverage.
 <br>
@@ -108,7 +108,7 @@ Haven’t installed it yet? [Go to the installation page](/installation/).
 - KDE q_low  
 - KDE min prominence  
 
-<img src="/assets/img/homologysettings.png" alt="Find Homology settings" width="500">  
+<img src="assets/img/homologysettings.png" alt="Find Homology settings" width="500">  
 Once done, click **Ok**.
 
 <br>
@@ -116,13 +116,13 @@ Once done, click **Ok**.
 #### **8. Once homology search is done:** {#noext-step-8}
 
 - Click **"Save log..."** to save the log.  
-  <img src="/assets/img/Homologysearchwindow.png" alt="Finish here message" width="700">
+  <img src="assets/img/Homologysearchwindow.png" alt="Finish here message" width="700">
 
 - Click **"Finish here"** if you want to end the process and not continue with clustering. A pop-up reminds you to review results in the "Homology" folder of the output folder. **You will then be returned to the start page.**  
-  <img src="/assets/img/Homologysearch_finishhere.png" alt="Finish here message" width="500">
+  <img src="assets/img/Homologysearch_finishhere.png" alt="Finish here message" width="500">
 
 - Or click **"Proceed to clustering"** to move to the clustering step (Continue to **[Step 9](#noext-step-9)**).  
-  <img src="/assets/img/Homologysearch_proceedtoclustering.png" alt="Proceed to clustering message" width="500">
+  <img src="assets/img/Homologysearch_proceedtoclustering.png" alt="Proceed to clustering message" width="500">
 
 <br>
 
@@ -132,13 +132,13 @@ Once done, click **Ok**.
 - Number of processors your computer can use  
 - Species name detection options
 
-<img src="/assets/img/Homologous-cluster-align-cropped.png" alt="Homologous align and cluster" width="700">  
+<img src="assets/img/Homologous-cluster-align-cropped.png" alt="Homologous align and cluster" width="700">  
 Once done, go to **[Step 11](#noext-step-11)**.
 
 <br>
 
 #### **10. Choose species name detection mode** {#noext-step-10}  
-<img src="/assets/img/SpeciesNameDetection_cropped.png" alt="Detect Species Name Option" width="700"><br>
+<img src="assets/img/SpeciesNameDetection_cropped.png" alt="Detect Species Name Option" width="700"><br>
 - **Automatic (from FASTA headers):** Click **"Detect"**  
 - **Manual:** Click **"Add species name by file"** and select your [species name file](#2-species-name-file-optional)  
 - **No detection:** Click **"Do not detect"**
@@ -159,17 +159,17 @@ the dendrogram viewer `.html` will **open automatically** for visualisation.
 ### **With external sequences** {#with-external-sequences}
 
 #### **4. Click "Select"** {#ext-step-4}  
-<img src="/assets/img/ExternalSequencesPrompt_select_cropped.png" alt="Alignment Prompt" width="500"> 
+<img src="assets/img/ExternalSequencesPrompt_select_cropped.png" alt="Alignment Prompt" width="500"> 
 <br>
 
 #### **5. Select the species you wish to include** {#ext-step-5}  
 Unselect any unwanted species and click **Proceed**.  
-<img src="/assets/img/ExternalSequenceSpeciesSelection.png" alt="Species Selection" width="700"> 
+<img src="assets/img/ExternalSequenceSpeciesSelection.png" alt="Species Selection" width="700"> 
 
 <br>
 
 #### **6. Select "BLAST based homology search"** {#ext-step-6}  
-<img src="/assets/img/Externalsequences_alignmentmode.png" alt="Alignment mode" width="500"> 
+<img src="assets/img/Externalsequences_alignmentmode.png" alt="Alignment mode" width="500"> 
 <br>At this stage, ensure that the names of the folders where your external sequences are does 
 not have spaces. For example, in the directory `/Users/Name/Desktop/GenBank Sequences/Mycetophilidae Sequences`, 
 remove the space in `GenBank Sequences` and `Mycetophilidae Sequences` or replace them with another character. 
@@ -188,7 +188,7 @@ Click "Proceed" to continue.
 - Hit length cutoff (fraction)
 - Number of hits
 
-<img src="/assets/img/BlastSearchSettings.png" alt="BLAST search settings" width="700">
+<img src="assets/img/BlastSearchSettings.png" alt="BLAST search settings" width="700">
 Once done, click **Ok**.
 
 <br>
@@ -199,7 +199,7 @@ Once done, click **Ok**.
 - Number of processors your computer can use  
 - Species name detection options
 
-<img src="/assets/img/Homologous-cluster-align-cropped.png" alt="Homologous align and cluster" width="700">
+<img src="assets/img/Homologous-cluster-align-cropped.png" alt="Homologous align and cluster" width="700">
 
 <br>
 
@@ -213,7 +213,7 @@ the dendrogram viewer `.html` will **open automatically** for visualisation.
 ---
 
 ### **Other Homology Search Options with external sequences** {#otheroptions}
-<img src="/assets/img/Externalsequences_alignmentmode_otheroptions.png" alt="Alignment mode" width="500">  
+<img src="assets/img/Externalsequences_alignmentmode_otheroptions.png" alt="Alignment mode" width="500">  
 Not the right option for you? Return to Step 6 [here](#ext-step-6)!
 
 - **Find homology exhaustively**
@@ -229,20 +229,20 @@ Not the right option for you? Return to Step 6 [here](#ext-step-6)!
 		- KDE q_low  
 		- KDE min prominence  
 	 
-	 <img src="/assets/img/homologysettings.png" alt="Find Homology settings" width="500">  
+	 <img src="assets/img/homologysettings.png" alt="Find Homology settings" width="500">  
 	 Once done, click **Ok**.
 	<br>
 	
 	- **Once homology search is done:** 
 	 
 		- Click **"Save log..."** to save the log.  
-	   <img src="/assets/img/Homologysearchwindow.png" alt="Finish here message" width="700">
+	   <img src="assets/img/Homologysearchwindow.png" alt="Finish here message" width="700">
 	 
 		- Click **"Finish here"** to stop and review the "Homology" folder (you’ll return to the start page).  
-	   <img src="/assets/img/Homologysearch_finishhere.png" alt="Finish here message" width="500">
+	   <img src="assets/img/Homologysearch_finishhere.png" alt="Finish here message" width="500">
 	 
 		- Or **"Proceed to clustering"** (Continue to **[Step 8](#ext-step-8)**).  
-	   <img src="/assets/img/Homologysearch_proceedtoclustering.png" alt="Proceed to clustering message" width="500">
+	   <img src="assets/img/Homologysearch_proceedtoclustering.png" alt="Proceed to clustering message" width="500">
  	<br>
 	
 - **Assume homology with my sequences** — Go to **[Step 8](#ext-step-8)**  
@@ -276,7 +276,7 @@ Once your clustering is complete, the `.html` dendrogram viewer opens automatica
 To begin:
 - Click **“Choose File”** and upload the **`.itv` file** from the clustering step.  
 
-<img src="/assets/img/visualisationoverview.png" alt="Overview of Visualisation" width="700">
+<img src="assets/img/visualisationoverview.png" alt="Overview of Visualisation" width="700">
 
 ---
 
@@ -320,12 +320,12 @@ Here are the following export formats you can choose:
 Here you can obtain some summary statistics for your sequences.
 
 There will be a pop up asking if you if you would want to calculate the summary statistics for all percentage thresholds.
-<img src="/assets/img/summarystats.png" alt="Summary stats" width="700">
+<img src="assets/img/summarystats.png" alt="Summary stats" width="700">
 <br>If you do not have any species names assigned to the clusters, it will only show the graph of "Clusters" against "Threshold".
 If you do have species names, it will also calculate the match ratio (Species congruence) and specimen congruence.
 
 <br>
-<img src="/assets/img/meier-etal-2025_figure1.png" alt="Match ratio and specimen congruence figure" width="700">
+<img src="assets/img/meier-etal-2025_figure1.png" alt="Match ratio and specimen congruence figure" width="700">
 <br>
 <br>
 **Match ratio ([Ahrens et al. 2016](https://doi.org/10.1093/sysbio/syw002))**

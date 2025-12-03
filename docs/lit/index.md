@@ -84,7 +84,7 @@ Both variables affect how clusters are categorised (Potentially congruent or Pot
 Refer to [cluster validation case studies](#lit-cluster-validation-case-studies) below for examples.
    
    If a recommended specimen cannot be checked (e.g. wrong sex, contamination, damage),  
-   [right-click]({{"/#right-click-options" | relative_url }}) the node and assign a reason. Then, select 
+   [right-click]({{"/using/#rightclick" | relative_url }}) the node and assign a reason. Then, select 
    another specimen from the **same haplotype**. If none are usable, choose one from the **next closest haplotype**.
 
 **For example:** If specimen BMY0001528 cannot be verified because it is a female specimen, 
@@ -96,14 +96,14 @@ be BMY0001343. Check that alternative specimen and the other LIT selected specim
 
 <br>
 
-**5.** Track your verification progress by [right-clicking]({{ "/#right-click-options" | relative_url }}) the specimen nodes.  
+**5.** Track your verification progress by [right-clicking]({{ "/using/#rightclick" | relative_url }}) the specimen nodes.  
    You can mark them as verified/cannot be verified, male/female, and other special conditions.
 
    <img src="{{ '/assets/img/rightclickoptions.png' | relative_url }}" alt="Verify specimen" width="250">
 
 <br>
 
-**6.** Once a cluster is validated as a species, [right-click]({{"/using/#right-click-options" | relative_url }}) the cluster node  
+**6.** Once a cluster is validated as a species, [right-click]({{"/using/#rightclick" | relative_url }}) the cluster node  
    to verify it or assign a species name/code.  
    ✅ The entire cluster (nodes, branches, labels) will turn green.
 

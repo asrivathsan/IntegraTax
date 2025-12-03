@@ -14,7 +14,7 @@ nav_order: 0
 - [Install IntegraTax]({{ "/installation/" | relative_url }})  
 - [How to use IntegraTax]({{ "/using/" | relative_url }}) 
 - [Large-scale Integrative Taxonomy (LIT) Workflow]({{ "/lit/" | relative_url }})
-- [Frequently Asked Questions]({{ "/faq/" | relative_url }})
+- [Frequently Asked Questions]({{ "/FAQ/" | relative_url }})
 - [About]({{ "/about/" | relative_url }})
 
 ## Main Functions

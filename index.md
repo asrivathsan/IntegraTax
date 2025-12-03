@@ -11,11 +11,11 @@ nav_order: 0
 
 ## Get Started
 
-- [Install IntegraTax](/installation/)  
-- [How to use IntegraTax](/using/)  
-- [Large-scale Integrative Taxonomy (LIT) Workflow](/lit/)
-- [Frequently Asked Questions](/faq/)
-- [About](/about/)
+- [Install IntegraTax]({{ "/installation/" | relative_url }})  
+- [How to use IntegraTax]({{ "/using/" | relative_url }}) 
+- [Large-scale Integrative Taxonomy (LIT) Workflow]({{ "/lit/" | relative_url }})
+- [Frequently Asked Questions]({{ "/faq/" | relative_url }})
+- [About]({{ "/about/" | relative_url }})
 
 ## Main Functions
 

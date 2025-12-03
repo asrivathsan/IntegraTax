@@ -1,0 +1,61 @@
+# Welcome to Jekyll!
+#
+# This config file is meant for settings that affect your whole blog, values
+# which you are expected to set up once and rarely edit after that. If you find
+# yourself editing this file very often, consider using Jekyll's data files
+# feature for the data you need to update frequently.
+#
+# For technical reasons, this file is *NOT* reloaded automatically when you use
+# 'bundle exec jekyll serve'. If you change this file, please restart the server process.
+#
+# If you need help with YAML syntax, here are some quick references for you:
+# https://learn-the-web.algonquindesign.ca/topics/markdown-yaml-cheat-sheet/#yaml
+# https://learnxinyminutes.com/docs/yaml/
+#
+# Site settings
+# These are used to personalize your new site. If you look in the HTML files,
+# you will see them accessed via {{ site.title }}, {{ site.email }}, and so on.
+# You can create any custom variable you would like, and they will be accessible
+# in the templates via {{ site.myvariable }}.
+
+title: IntegraTax
+email: Amrita.Srivathsan@mfn.berlin
+description: >- # this means to ignore newlines until "baseurl:"
+  Documentation for using IntegraTax.
+baseurl: "/IntegraTax" # the subpath of your site, e.g. /blog
+url: "https://asrivathsan.github.io" # the base hostname & protocol for your site, e.g. http://example.com
+
+# Build settings
+remote_theme: just-the-docs/just-the-docs
+
+plugins:
+  - jekyll-feed
+  
+just_the_docs:
+  search_enabled: true
+  custom_css:
+    - assets/css/edge.css
+
+collections:
+  docs:
+    output: true
+    permalink: /:path/
+
+defaults:
+  - scope:
+      path: ""
+      type: docs
+    values:
+      layout: default
+      nav_order: 1
+
+include:
+  - docs
+  - assets/videos
+
+markdown: kramdown
+kramdown:
+  input: GFM
+  math_engine: mathjax
+
+logo: /assets/img/softwarelogonew.png

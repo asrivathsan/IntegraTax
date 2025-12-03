@@ -20,10 +20,6 @@ has_toc: false
 
 ## **Installation**
 
-### Why can't I open IntegraTax on macOS?
-
-Didn't read the Installation page huh? ;) [Click here to resolve the issue.]({{ "/installation/" | relative_url }})
-
 ---
 
 ## **Clustering**

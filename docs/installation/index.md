@@ -14,7 +14,7 @@ IntegraTax can be installed and run on the following operating systems:
 
 You can download the latest version of IntegraTax from the GitHub repository:
 
-👉 [Download IntegraTax](https://github.com/YOUR_ORG/integra-tax)  
+👉 [Download IntegraTax](https://github.com/asrivathsan/IntegraTax/releases)  
 <!-- Replace this link with the actual GitHub page -->
 
 ---

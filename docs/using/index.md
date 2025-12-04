@@ -9,7 +9,7 @@ has_toc: false
 
 {% include mathjax.html %}
 
-# **Using the Programme**
+# **Using the Program**
 
 ## **Table of Contents**
 

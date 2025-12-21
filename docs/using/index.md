@@ -15,15 +15,12 @@ has_toc: false
 
 - [What IntegraTax does](#what-integratax-does)
 - [Input files needed](#input-files-needed)
-- [Clustering](#clustering)
-  - [Without identified reference sequences](#without-external-sequences)
-    - [Aligned sequences](#noext-step-5)
-    - [Unaligned sequences](#noext-step-6)
-  - [With identified reference sequences](#with-external-sequences)
-    - [Alignment modes](#ext-step-6)
-    - [BLAST search](#ext-step-9)
+- [Clustering](#module-1)
+  - [Mode 1: Own data](#mode-1)
+  - [Mode 2: Own data + reference data](#mode-2)
+  - [Mode 3: Clean-up messy data](#mode-3)
   - [Clustering output folder](#clustering-output-files)
-- [Visualisation](#visualisation)
+- [Visualisation](#module-2)
   - [Visualisation functions](#visualisation-functions)
   - [Saving your progress](#saving-your-progress)
   - [Export formats](#export-formats-available)
@@ -34,23 +31,28 @@ has_toc: false
 
 Congratulations! You have accumulated your DNA sequences and are ready to analyse them!
 
-IntegraTax has *two* main functions:
+IntegraTax has *two* modules:
 
-**1.** **Clustering:** Groups your sequences into molecular Operational Taxonomic Units (mOTUs; putative species) based on pairwise distances.  
-**2.** **Visualization:** Displays the clusters and specimens as a dendrogram (Cluster Fusion Diagram).
+**1.** **Clustering:** Groups your sequences into sets of speciemen based on pairwise distances hierarchically (single linkage/ Onjective clustering)
+**2.** **Taxonomy:** For annotation of the clusters and specimens as a dendrogram (Cluster Fusion Diagram). 
+
+First lets take the sequences through module 1 which gives you several options:
+
+<img src="{{ '/assets/img/overview.png' | relative_url }}" alt="Species Name File" width="700"><br>
+
 
 ---
 
-## **Input files needed**
+## **Module 1: Input files needed**
 
-IntegraTax requires at most **two input files**:
+Typically IntegraTax Clustering module is run in Mode 1 (**one file**) or Mode 2 (**two input FASTA files**). Additionally an experimental Mode 3 is implemented to help you clean up a fasta file with non overlapping regions.
 
 ### 1. FASTA file(s)
 
-- Keep sequence headers ≤ **150 characters**.
+- Keep sequence headers ≤ **150 characters**. FASTA file can be aligned or not unaligned. 
 
-NOTE: If you have a 2nd fasta file with identified reference sequences (e.g. from NCBI genbank or BOLD or sequences from other projects), 
-IntegraTax can add those sequences to the clustering in [Step 3](#with-external-sequences).
+NOTE: If you have a 2nd fasta file with identified reference sequences for Mode 2 (e.g. from NCBI genbank or BOLD or sequences from other projects), 
+IntegraTax can add those sequences to the clustering in [Step 3](#with-external-sequences). This file need not be aligned as this mode is always run with pairwise alignments
 
 ### 2. Species name file (optional)
 
@@ -68,108 +70,70 @@ IntegraTax can add those sequences to the clustering in [Step 3](#with-external-
 Haven’t installed it yet? [Go to the installation page]({{ "/installation/" | relative_url }}).
 <br>
 
-#### **2. Drag and drop your FASTA file into the IntegraTax GUI.** {#step-2}  
-<img src="{{ '/assets/img/DragAndDrop.gif' | relative_url }}" alt="Drag and Drop FASTA" width="700"><br>
+#### **2. Select the aim of your project** {#step-2}  
+<img src="{{ '/assets/img/ModeSelection.gif' | relative_url }}" alt="Drag and Drop FASTA" width="700"><br>
+<br>
+IntegraTax offers you 3 modes. Click as needed
 <br>
 
-#### **3. Depending on your data, click the following for the next instructions:** {#step-3}
-- [Without identified reference sequences](#without-external-sequences)
-- [With identified reference sequences](#with-external-sequences)
-<br>
+- [**Mode 1**] {#mode-1}: You have a set of sequences for specimens you want to study. The sequences are curated, i.e. you know they are overlapping and are of the target region
+- [**Mode 2**]{#mode-2}: You have sequences for Mode 1, but also want to include some reference sequences that came from earlier studies (e.g. NCBI/BOLD)
+- [**Mode 3**]{#mode-3} You are in an exploratory phase, have downloaded data from GenBank and want to clean it up to overlapping regions. You can clean up the data and cluster.
 
 ---
 
-### **Without identified reference sequences** {#without-external-sequences}
+### **Mode 1** {#mode-1}
 
-#### **4. Click "no"** {#noext-step-4}  
+#### **Mode 1 Step 1. Drag your FASTA file into the box** {#mode-1-step-1}  
 <img src="{{ '/assets/img/2ndFastaFilePrompt.png' | relative_url }}" alt="Alignment Prompt" width="500"> 
 <br>
-
-#### **5. If you have aligned sequences, you will see this pop-up. Otherwise, proceed to [Step 6](#noext-step-6)** {#noext-step-5}  
+#### **Mode 1 Step 2. If you have aligned sequences, you will see a pop-up. Otherwise, proceed to [Mode 1 Step 3](#mode-1-step-3)** {#mode-1-step-2}  
 <img src="{{ '/assets/img/AlignmentPrompt1_cropped.png' | relative_url }}" alt="Alignment Prompt" width="500">  
-- If your sequences are already aligned, select **Yes (Aligned)** and proceed to **[Step 10](#noext-step-10)**.  
-- Otherwise, select **No (Pairwise)** and proceed to **[Step 6](#noext-step-6)**.
-<br>
+	- If your sequences are already aligned, select **Yes (Aligned)**.  
+	- Otherwise, select **No (Pairwise)**.
 
-#### **6. Select pairwise alignment mode** {#noext-step-6}  
-<img src="{{ '/assets/img/homologousornot_new.png' | relative_url }}" alt="Homologous Unaligned" width="700">  
-- **Homologous sequences** — Go to **[Step 9](#noext-step-9)**. Use this if all sequences represent the **same gene region** with minor start/end variation (typical *COI* barcode datasets).  
-- **Find homology** — Go to **[Step 7](#noext-step-7)**. Use this for **non-overlapping fragments** or highly variable lengths/coverage.
-<br>
-
-#### **7. If you click "Find homology"**, set the following variables: {#noext-step-7}
-- Output prefix  
-- Max proportion of N  
-- Number of sequences for 2nd pass
-- Min length fraction
-- Bandwidth
-- KDE q_low
-- KDE q_high
-- Min prominence
-- Fixed threshold pass 1
-- Fixed threshold pass 2
-
-<img src="{{ '/assets/img/homologysettings_new.png' | relative_url }}" alt="Find Homology settings" width="500">  
-Once done, click **Ok**.
-
-<br>
-
-#### **8. Once homology search is done:** {#noext-step-8}
-
-- Click **"Save log..."** to save the log.  
-  <img src="{{ '/assets/img/Homologysearchwindow_new.png' | relative_url }}" alt="Finish here message" width="700">
-
-- Click **"Finish here"** if you want to end the process and not continue with clustering. A pop-up reminds you to review results in the "Homology" folder of the output folder. **You will then be returned to the start page.**  
-  <img src="{{ '/assets/img/Homologysearch_finishhere.png' | relative_url }}" alt="Finish here message" width="500">
-
-- Or click **"Proceed to clustering"** to move to the clustering step (Continue to **[Step 9](#noext-step-9)**).  
-  <img src="{{ '/assets/img/Homologysearch_proceedtoclustering_new.png' | relative_url }}" alt="Proceed to clustering message" width="500">
-
-<br>
-
-#### **9. If you clicked "Homologous sequences" or completed homology search, set:** {#noext-step-9}
-- Minimum overlap for clustering settings  
-- Gap opening and extension penalty for alignment settings  
-- Number of processors your computer can use  
-- Species name detection options
-
-<img src="{{ '/assets/img/Homologous-cluster-align-cropped.png' | relative_url }}" alt="Homologous align and cluster" width="700">  
-Once done, go to **[Step 11](#noext-step-11)**.
-
-<br>
-
-#### **10. Choose species name detection mode** {#noext-step-10}  
+#### **Mode 1 Step 3. Set up your clustering configuration** {#mode-1-step-3}  
 <img src="{{ '/assets/img/SpeciesNameDetection_cropped.png' | relative_url }}" alt="Detect Species Name Option" width="700"><br>
-- **Automatic (from FASTA headers):** Click **"Detect"**  
-- **Manual:** Click **"Add species name by file"** and select your [species name file](#2-species-name-file-optional)  
-- **No detection:** Click **"Do not detect"**
 
-<br>
+- **Overlap length setting**
+	- This is crucial because the software will alert if it finds too many short overlaps. It insists on having at least some minimum overlaps between fragments
+- **Number of processors**
+	- Number of processors used for distance calculations. This matters especially for large datasets.
+- **Species name detection**
+	- **Automatic (from FASTA headers):** Click **"Detect"**  
+	- **Manual:** Click **"Add species name by file"** and select your [species name file](#2-species-name-file-optional)  
+	- **No detection:** Click **"Do not detect"**
+	
+#### 4. Gap opening  and extension penalty (pairwise alignment mode only)
+- Allows you to modulate alignment parameters for pairwise alignment
 
-#### **11. Click “Cluster” to begin** {#noext-step-11}
-
-<br>
-
-#### **12. After clustering completes** {#noext-step-12}  
-the dendrogram viewer `.html` will **open automatically** for visualisation.  
-
+#### **Mode 1 Step 4. Click “Cluster” to begin**. {#mode-1-step-4)
+- After the clustering the dendrogram viewer `.html` will **open automatically** for visualisation (Module 2: Taxonomy)
+- Refer to [Clustering Output files] #clustering-output-files for details of the outputs. 
 <br>
 
 ---
 
-### **With identified reference sequences** {#with-external-sequences}
+### **Mode 2** {#mode-2}
+This mode is for when you have 2 FASTA files (project and reference files)
+<br>
 
-#### **4. Click "Select"** {#ext-step-4}  
+#### **Mode 2 Step 1. Drag your Project FASTA file into the box** {#mode-2-step-1}  
+You will notice an alert saying the top sequence is reference sequence. This is because we need to ensure that eventually overlapping regions make it to the dendrogram. The first sequence tunes the hit length parameter in the BLAST search done later. 
 <img src="{{ '/assets/img/2ndFastaFilePrompt.png' | relative_url }}" alt="Alignment Prompt" width="500"> 
 <br>
 
-#### **5. Select the species you wish to include** {#ext-step-5}  
+#### **Mode 2 Step 2. Drag your Reference FASTA file into the box** {#mode-2-step-2}  
+<img src="{{ '/assets/img/2ndFastaFilePrompt.png' | relative_url }}" alt="Alignment Prompt" width="500"> 
+<br>
+
+#### **Mode 2 Step 3. Select the species you wish to include** {#mode-2-step-3}  
 Unselect any unwanted species and click **Proceed**.  
 <img src="{{ '/assets/img/ExternalSequenceSpeciesSelection.png' | relative_url }}" alt="Species Selection" width="700"> 
 
 <br>
 
-#### **6. Select "BLAST based homology search"** {#ext-step-6}  
+#### **Mode 2 Step 4. Select "BLAST based homology search"** {#mode-2-step-4}  
 <img src="{{ '/assets/img/Externalsequences_alignmentmode.png' | relative_url }}" alt="Alignment mode" width="500"> 
 <br>At this stage, ensure that the names of the folders where your 2nd fasta file is does 
 not have spaces. For example, in the directory `/Users/Name/Desktop/GenBank Sequences/Mycetophilidae Sequences`, 
@@ -182,7 +146,7 @@ Click "Proceed" to continue.
 
 <br>
 
-#### **7. Choose your settings for BLAST based homology search** {#ext-step-7}  
+#### **Mode 2 Step 5. Choose your settings for BLAST based homology search** {#mode-2-step-5}  
 - Output prefix
 - Threads
 - Identity cutoff (%)
@@ -194,7 +158,7 @@ Once done, click **Ok**.
 
 <br>
 
-#### **8. Set the following alignment and clustering variables:** {#ext-step-8}
+#### **Mode 2 Step 6. Set the following alignment and clustering variables:** {#mode-2-step-6}
 - Minimum overlap for clustering settings  
 - Gap opening and extension penalty for alignment settings  
 - Number of processors your computer can use  
@@ -204,13 +168,71 @@ Once done, click **Ok**.
 
 <br>
 
-#### **9. Click “Cluster” to begin** {#ext-step-9}
+#### **Mode 2 Step 7. Click “Cluster” to begin** {#mode-2-step-7}
+- After the clustering the dendrogram viewer `.html` will **open automatically** for visualisation (Module 2: Taxonomy)
+- Refer to [Clustering Output files] #clustering-output-files for details of the outputs. 
+<br>
+
+---
+
+### **Mode 3** {#mode-3}
+Mode 3 is a new "homology search" feature implemented in IntegraTax. It takes your first sequence in the fasta file, finds distances of this sequence from other files (Pass 1). Builds a distance profile and then implements KDE to smoothen the curve. It finds the antimode of this curve as a break point, and trims sequences falling within the distributio to overlapping areas. It then repeats this with 10 (default) sequences sampled across the distance profile of the first sequence to reduce biases introduced by your first reference (pass 2). 
+
+#### **Mode 3 Step 1. Drag your FASTA file into the box** {#mode-3-step-1}  
+Mode 3 is going to implement a homology search feature. This will use the first sequence of your file to define the reference and trim the longer or partially overlapping region to the region of interest.
+
+<img src="{{ '/assets/img/2ndFastaFilePrompt.png' | relative_url }}" alt="Alignment Prompt" width="500"> 
+<br>
+
+#### **Mode 3 Step 2. On loading the first sequence ID will be printed** {#mode-3-step-2}  
+Confirm based on the ID
+
+#### **Mode 3 Step 3. Confire the search** {#mode-3-step-3}  
+- Output prefix: This will print the output files with this prefix
+- Max proportion of N: As homology searches are based on similarity, having too many Ns in the references can influence distance calculation. You can exclude the 
+- Number of sequences for 2nd pass: See Mode 3 description. Number of sampled sequences.
+- Min length fraction: Minimum length of overlap required to be considered a homologous fragment. 0.75 is default and this is because in fragmented landscape, this will ensure sufficient overlap between two partial sequences 
+- Bandwidth: The distance distribution is smoothened by a Kernel Density Estimator implemented in SciPy, where the bandwidth is automatically selected using Silverman’s or Scott’s rule based on the data variance and sample size.
+- KDE q_low: Lower quantile of the KDE-smoothed distance distribution used to restrict the analysis range and suppress extreme low-end outliers.
+- KDE q_high: Upper quantile of the KDE-smoothed distance distribution used to restrict the analysis range and suppress extreme high-end outliers.
+- Min prominence: Minimum required depth of a valley (relative to surrounding peaks) for it to be considered significant.
+- Fixed threshold pass 1: By pass autodetection using fixed distance threshold (proportion)
+- Fixed threshold pass 2: Same as above but for pass 2. (proportion)
+
+<img src="{{ '/assets/img/homologysettings_new.png' | relative_url }}" alt="Find Homology settings" width="500">  
+Once done, click **Ok**.
 
 <br>
 
-#### **10. After clustering completes** {#ext-step-10}  
-the dendrogram viewer `.html` will **open automatically** for visualisation.  
+#### **Mode 3 Step 4. Once homology search is done:** {#mode-3-step-4}
 
+- Click **"Save log..."** to save the log.  
+  <img src="{{ '/assets/img/Homologysearchwindow_new.png' | relative_url }}" alt="Finish here message" width="700">
+
+- Click **"Finish here"** if you want to end the process and not continue with clustering. A pop-up reminds you to review results in the "Homology" folder of the output folder. **You will then be returned to the start page.**  
+  <img src="{{ '/assets/img/Homologysearch_finishhere.png' | relative_url }}" alt="Finish here message" width="500">
+
+- Or click **"Proceed to clustering"** to move to the clustering step (Continue to **[Step 9](#noext-step-9)**).  
+  <img src="{{ '/assets/img/Homologysearch_proceedtoclustering_new.png' | relative_url }}" alt="Proceed to clustering message" width="500">
+
+<br>
+
+#### **Mode 2 Step 5. Set the following alignment and clustering variables:** {#mode-2-step-6}
+- Minimum overlap for clustering settings  
+- Gap opening and extension penalty for alignment settings  
+- Number of processors your computer can use  
+- Species name detection options
+
+<img src="{{ '/assets/img/Homologous-cluster-align-cropped.png' | relative_url }}" alt="Homologous align and cluster" width="700">
+
+<br>
+
+#### **Mode 2 Step 6. Click “Cluster” to begin** {#mode-2-step-7}
+- After the clustering the dendrogram viewer `.html` will **open automatically** for visualisation (Module 2: Taxonomy)
+- Refer to [Clustering Output files] #clustering-output-files for details of the outputs. 
+<br>
+
+---
 ---
 
 ### **Other Homology Search Options with identified reference sequences** {#otheroptions}
@@ -220,17 +242,17 @@ Not the right option for you? Return to Step 6 [here](#ext-step-6)!
 - **Find homology exhaustively**
 
 	- **If you click "Find homology exhaustively"**, set the following variables: 
-		- Output prefix
-  		- Max proportion of N  
-		- Number of sequences for 2nd pass
-		- Min length fraction
-		- Bandwidth
-		- KDE q_low
-		- KDE q_high
-		- Min prominence
-		- Fixed threshold pass 1
-		- Fixed threshold pass 2
-	 
+		- Output prefix: This will print the output files with this prefix
+		- Max proportion of N: As homology searches are based on similarity, having too many Ns in the references can influence distance calculation. You can exclude the 
+		- Number of sequences for 2nd pass: See Mode 3 description. Number of sampled sequences.
+		- Min length fraction: Minimum length of overlap required to be considered a homologous fragment. 0.75 is default and this is because in fragmented landscape, this will ensure sufficient overlap between two partial sequences 
+		- Bandwidth: The distance distribution is smoothened by a Kernel Density Estimator implemented in SciPy, where the bandwidth is automatically selected using Silverman’s or Scott’s rule based on the data variance and sample size.
+		- KDE q_low: Lower quantile of the KDE-smoothed distance distribution used to restrict the analysis range and suppress extreme low-end outliers.
+		- KDE q_high: Upper quantile of the KDE-smoothed distance distribution used to restrict the analysis range and suppress extreme high-end outliers.
+		- Min prominence: Minimum required depth of a valley (relative to surrounding peaks) for it to be considered significant.
+		- Fixed threshold pass 1: By pass autodetection using fixed distance threshold (proportion)
+		- Fixed threshold pass 2: Same as above but for pass 2. (proportion)
+			 
 	 <img src="{{ '/assets/img/homologysettings_new.png' | relative_url }}" alt="Find Homology settings" width="500">  
 	 Once done, click **Ok**.
 	<br>
@@ -272,7 +294,7 @@ You will receive a nested folder (e.g. `IntegraTaxOut_20251007_101901`) in the s
 
 ---
 
-## **Visualisation** {#visualisation}
+## **Module 2 Taxonomy** {#module-2}
 
 Once your clustering is complete, the `.html` dendrogram viewer opens automatically.  
 To begin:
@@ -370,6 +392,17 @@ Hovering your cursor over the headers will reveal the entire header.
 Adjust the dendrogram’s scale and view thresholds for better interpretation of cluster distances.
 - **Ruler: ON/OFF** — shows or hides pairwise distance threshold scale
 - **Log length: ON/OFF** — toggle logarithmic branch length view
+
+<br>
+
+#### **<u>SPART visualization</u>** {#spart}
+You can get SPART outputs from other species delimitation approaches using SPART explorer: For example use [SPART explorer](https://spartexplorer.mnhn.fr/) to get it for ASAP/ABGD 
+<br>
+- **Load** the SPART file
+- **Panel:** You can see the panel on the right that summarizes multiple delimtation schemes. 
+	- It first builds a unified species delimitation where any scheme in any delimtiation gets a unique identifier. 
+	- This is then used to show consistancy across partitions.
+- The tool tip can be used to identify the cluster. Split clusters are shown with dashed boxes
 
 <br>
 

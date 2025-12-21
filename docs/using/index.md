@@ -38,7 +38,7 @@ IntegraTax has *two* modules:
 
 First lets take the sequences through module 1 which gives you several options:
 
-<img src="{{ '/assets/img/Overview.tif' | relative_url }}" alt="Species Name File" width="700"><br>
+<img src="{{ '/assets/img/Overview.png' | relative_url }}" alt="Species Name File" width="700"><br>
 
 
 ---

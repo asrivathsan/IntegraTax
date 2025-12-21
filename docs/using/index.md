@@ -86,21 +86,21 @@ IntegraTax offers you 3 modes. Click as needed
 ### **Mode 1** {#mode-1}
 
 #### **Mode 1 Step 1. Drag your FASTA file into the box** {#mode-1-step-1}  
-<img src="{{ '/assets/img/2ndFastaFilePrompt.png' | relative_url }}" alt="Alignment Prompt" width="500"> **NEEDS REPLACEMENT**
+<img src="{{ '/assets/img/DragFastaHere.png' | relative_url }}" alt="Alignment Prompt" width="500"> 
 <br>
 
 #### **Mode 1 Step 2. If you have aligned sequences, you will see a pop-up. Otherwise, proceed to [Mode 1 Step 3](#mode-1-step-3)** {#mode-1-step-2}
 <br>
-<img src="{{ '/assets/img/AlignmentPrompt1_cropped.png' | relative_url }}" alt="Alignment Prompt" width="500">   **NEEDS REPLACEMENT**
-	- If your sequences are already aligned, select **Yes (Aligned)**.  
-	- Otherwise, select **No (Pairwise)**.
+<img src="{{ '/assets/img/AlignedFastaPrompt.png' | relative_url }}" alt="Alignment Prompt" width="500"> 
+	- If your sequences are already aligned, select **Yes**.  
+	- Otherwise, select **No**.
 
 #### **Mode 1 Step 3. Set up your clustering configuration** {#mode-1-step-3} 
 <br>
-<center><img src="{{ '/assets/img/SpeciesNameDetection_cropped.png' | relative_url }}" alt="Detect Species Name Option" width="400"></center><br>
+<center><img src="{{ '/assets/img/UnalignedFasta.png' | relative_url }}" alt="Detect Species Name Option" width="400"></center><br>
 
-- **Overlap length setting**
-	- This is crucial because the software will alert if it finds too many short overlaps. It insists on having at least some minimum overlaps between fragments
+- **Overlap length setting (Minimum Overlap)**
+	- This is crucial because the software will alert if it finds too many short overlaps. It insists on having at least some minimum overlaps between fragments.
 - **Number of processors**
 	- Number of processors used for distance calculations. This matters especially for large datasets.
 - **Species name detection**
@@ -108,7 +108,7 @@ IntegraTax offers you 3 modes. Click as needed
 	- **Manual:** Click **"Add species name by file"** and select your [species name file](#2-species-name-file-optional)  
 	- **No detection:** Click **"Do not detect"**
 	
-- Gap opening  and extension penalty (pairwise alignment mode only)
+- **Gap opening and extension penalty (pairwise alignment mode only)**
 	- Allows you to modulate alignment parameters for pairwise alignment
 
 #### **Mode 1 Step 4. Click “Cluster” to begin**. {#mode-1-step-4}
@@ -124,11 +124,11 @@ This mode is for when you have 2 FASTA files (project and reference files)
 
 #### **Mode 2 Step 1. Drag your Project FASTA file into the box** {#mode-2-step-1}  
 You will notice an alert saying the top sequence is reference sequence. This is because we need to ensure that eventually overlapping regions make it to the dendrogram. The first sequence tunes the hit length parameter in the BLAST search done later. 
-<img src="{{ '/assets/img/2ndFastaFilePrompt.png' | relative_url }}" alt="Alignment Prompt" width="500">  **NEEDS REPLACEMENT**
+<img src="{{ '/assets/img/ProjectFastaMode2.png' | relative_url }}" alt="Alignment Prompt" width="500">
 <br>
 
 #### **Mode 2 Step 2. Drag your Reference FASTA file into the box** {#mode-2-step-2}  
-<img src="{{ '/assets/img/2ndFastaFilePrompt.png' | relative_url }}" alt="Alignment Prompt" width="500">  **NEEDS REPLACEMENT**
+<img src="{{ '/assets/img/ReferenceFastaMode2.png' | relative_url }}" alt="Alignment Prompt" width="500">
 <br>
 
 #### **Mode 2 Step 3. Select the species you wish to include** {#mode-2-step-3}  
@@ -139,8 +139,7 @@ Unselect any unwanted species and click **Proceed**.
 
 #### **Mode 2 Step 4. Select "BLAST based homology search"** {#mode-2-step-4}  
 <center><img src="{{ '/assets/img/Externalsequences_alignmentmode.png' | relative_url }}" alt="Alignment mode" width="300"></center> 
-<br>At this stage, ensure that the names of the folders where your 2nd fasta file is does 
-not have spaces. For example, in the directory /Users/Name/Desktop/GenBank Sequences/Mycetophilidae Sequences, 
+<br>At this stage, ensure that the names of the folders where your 2nd fasta file is does not have spaces. For example, in the directory /Users/Name/Desktop/GenBank Sequences/Mycetophilidae Sequences, 
 remove the space in GenBank Sequences and Mycetophilidae Sequences or replace them with another character. 
 If there are spaces in the directory, the BLAST based homology search will **fail**!
 
@@ -185,11 +184,12 @@ Mode 3 is a new "homology search" feature implemented in IntegraTax. It takes yo
 #### **Mode 3 Step 1. Drag your FASTA file into the box** {#mode-3-step-1}  
 Mode 3 is going to implement a homology search feature. This will use the first sequence of your file to define the reference and trim the longer or partially overlapping region to the region of interest.
 
-<img src="{{ '/assets/img/2ndFastaFilePrompt.png' | relative_url }}" alt="Alignment Prompt" width="500">  **NEEDS REPLACEMENT**
+<img src="{{ '/assets/img/DragProjectFastaMode3.png' | relative_url }}" alt="Alignment Prompt" width="500">
 <br>
 
 #### **Mode 3 Step 2. On loading the first sequence ID will be printed** {#mode-3-step-2}  
 Confirm based on the ID
+<img src="{{ '/assets/img/IDpromptMode3.png' | relative_url }}" alt="Alignment Prompt" width="500">
 <br>
 
 #### **Mode 3 Step 3. Configure the search** {#mode-3-step-3}  
@@ -224,7 +224,7 @@ Once done, click **Ok**.
 
 <br>
 
-#### **Mode 2 Step 5. Set the following alignment and clustering variables:** {#mode-2-step-6}
+#### **Mode 3 Step 5. Set the following alignment and clustering variables:** {#mode-3-step-5}
 - Minimum overlap for clustering settings  
 - Gap opening and extension penalty for alignment settings  
 - Number of processors your computer can use  
@@ -234,7 +234,7 @@ Once done, click **Ok**.
 
 <br>
 
-#### **Mode 2 Step 6. Click “Cluster” to begin** {#mode-2-step-7}
+#### **Mode 3 Step 6. Click “Cluster” to begin** {#mode-3-step-6}
 - After the clustering the dendrogram viewer .html will **open automatically** for visualisation (Module 2: Taxonomy)
 - Refer to [Clustering Output files](#clustering-output-files) for details of the outputs. 
 <br>
@@ -243,7 +243,7 @@ Once done, click **Ok**.
 
 ### **Other Homology Search Options with identified reference sequences** {#otheroptions}
 <center><img src="{{ '/assets/img/Externalsequences_alignmentmode_otheroptions.png' | relative_url }}" alt="Alignment mode" width="400">  </center>
-Not the right option for you? Return to Step 6 [here](#ext-step-6)!
+Not the right option for you? Return to [Mode 2 Step 4](#mode-2-step-4) or [Mode 3 Step ](#)!
 
 - **Find homology exhaustively**
 

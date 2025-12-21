@@ -21,6 +21,16 @@ nav_order: 0
 
 IntegraTax provides two core functions:
 
-**1.** **Clustering** - Groups your sequences into molecular Operational Taxonomic Units (mOTUs; clusters) based on pairwise distances.
+**1.** **Clustering** - Groups your sequences based on pairwise distances (single linkage/Objective clustering
 
-**2.** **Visualisation** - Displays the clusters and specimens as an interactive dendrogram (Cluster Fusion Diagram).
+<br> An overview of clustering module implemented as IntegraTax executable
+<br>
+
+<img src="{{ '/assets/img/Overview.png' | relative_url }}" alt="Species Name File" width="700"><br>
+
+**2.** **Taxonomy** - Displays the clusters and specimens as an interactive dendrogram (Cluster Fusion Diagram) that can be annotated by taxonomists
+
+<br> A snapshot of IntegraTaxViz.html
+<br>
+
+<img src="{{ '/assets/img/visualisationoverview.png' | relative_url }}" alt="Overview of Visualisation" width="700"> **NEEDS REPLACEMENT WITH SPART BUTTON**

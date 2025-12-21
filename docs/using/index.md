@@ -406,7 +406,8 @@ Adjust the dendrogram’s scale and view thresholds for better interpretation of
 <br>
 
 #### **<u>SPART visualization</u>** {#spart}
-You can get SPART outputs from other species delimitation approaches using SPART explorer: For example use [SPART explorer](https://spartexplorer.mnhn.fr/) to get it for ASAP/ABGD 
+<br>
+You can get SPART outputs from other species delimitation approaches: For example use [SPART explorer](https://spartexplorer.mnhn.fr/) to get it for ASAP/ABGD 
 <br>
 - **Load** the SPART file
 - **Panel:** You can see the panel on the right that summarizes multiple delimtation schemes. 

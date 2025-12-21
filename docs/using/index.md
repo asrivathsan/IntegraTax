@@ -44,18 +44,20 @@ First lets take the sequences through module 1 which gives you several options:
 
 ---
 
-## **Module 1: Input files needed**
+## **Module 1: Objective clustering**
 
 Typically IntegraTax Clustering module is run in Mode 1 (**one file**) or Mode 2 (**two input FASTA files**). Additionally an experimental Mode 3 is implemented to help you clean up a fasta file with non overlapping regions.
 
-### 1. FASTA file(s)
+### Input files needed
+
+#### 1. FASTA file(s)
 
 - Keep sequence headers ≤ **150 characters**. FASTA file can be aligned or not unaligned. 
 
 NOTE: If you have a 2nd fasta file with identified reference sequences for Mode 2 (e.g. from NCBI genbank or BOLD or sequences from other projects), 
 IntegraTax can add those sequences to the clustering in [Step 3](#with-external-sequences). This file need not be aligned as this mode is always run with pairwise alignments
 
-### 2. Species name file (optional)
+#### 2. Species name file (optional)
 
 - Only required if you want **manual species name detection** instead of automatic extraction.
 - Format: A `.csv` file containing species names that corresponds to your sequence headers.

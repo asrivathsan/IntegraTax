@@ -91,7 +91,8 @@ IntegraTax offers you 3 modes. Click as needed
 
 #### **Mode 1 Step 2. If you have aligned sequences, you will see a pop-up. Otherwise, proceed to [Mode 1 Step 3](#mode-1-step-3)** {#mode-1-step-2}
 <br>
-<img src="{{ '/assets/img/AlignedFastaPrompt.png' | relative_url }}" alt="Alignment Prompt" width="500"> 
+<img src="{{ '/assets/img/AlignedFastaPrompt.png' | relative_url }}" alt="Alignment Prompt" width="500">
+<br>
 	- If your sequences are already aligned, select **Yes**.  
 	- Otherwise, select **No**.
 
@@ -243,7 +244,7 @@ Once done, click **Ok**.
 
 ### **Other Homology Search Options with identified reference sequences** {#otheroptions}
 <center><img src="{{ '/assets/img/Externalsequences_alignmentmode_otheroptions.png' | relative_url }}" alt="Alignment mode" width="400">  </center>
-Not the right option for you? Return to [Mode 2 Step 4](#mode-2-step-4) or [Mode 3 Step ](#)!
+Not the right option for you? Return to [Mode 2 Step 4](#mode-2-step-4)!
 
 - **Find homology exhaustively**
 

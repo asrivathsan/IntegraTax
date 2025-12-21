@@ -90,6 +90,7 @@ IntegraTax offers you 3 modes. Click as needed
 #### **Mode 1 Step 1. Drag your FASTA file into the box** {#mode-1-step-1}  
 <img src="{{ '/assets/img/2ndFastaFilePrompt.png' | relative_url }}" alt="Alignment Prompt" width="500"> 
 <br>
+
 #### **Mode 1 Step 2. If you have aligned sequences, you will see a pop-up. Otherwise, proceed to [Mode 1 Step 3](#mode-1-step-3)** {#mode-1-step-2}
 <br>
 <img src="{{ '/assets/img/AlignmentPrompt1_cropped.png' | relative_url }}" alt="Alignment Prompt" width="500">  
@@ -97,7 +98,7 @@ IntegraTax offers you 3 modes. Click as needed
 	- Otherwise, select **No (Pairwise)**.
 
 #### **Mode 1 Step 3. Set up your clustering configuration** {#mode-1-step-3}  
-<img src="{{ '/assets/img/SpeciesNameDetection_cropped.png' | relative_url }}" alt="Detect Species Name Option" width="700"><br>
+<center><img src="{{ '/assets/img/SpeciesNameDetection_cropped.png' | relative_url }}" alt="Detect Species Name Option" width="400"></center><br>
 
 - **Overlap length setting**
 	- This is crucial because the software will alert if it finds too many short overlaps. It insists on having at least some minimum overlaps between fragments
@@ -133,12 +134,12 @@ You will notice an alert saying the top sequence is reference sequence. This is 
 
 #### **Mode 2 Step 3. Select the species you wish to include** {#mode-2-step-3}  
 Unselect any unwanted species and click **Proceed**.  
-<img src="{{ '/assets/img/ExternalSequenceSpeciesSelection.png' | relative_url }}" alt="Species Selection" width="700"> 
+<center><img src="{{ '/assets/img/ExternalSequenceSpeciesSelection.png' | relative_url }}" alt="Species Selection" width="500"> </center>
 
 <br>
 
 #### **Mode 2 Step 4. Select "BLAST based homology search"** {#mode-2-step-4}  
-<img src="{{ '/assets/img/Externalsequences_alignmentmode.png' | relative_url }}" alt="Alignment mode" width="500"> 
+<center><img src="{{ '/assets/img/Externalsequences_alignmentmode.png' | relative_url }}" alt="Alignment mode" width="400"></center> 
 <br>At this stage, ensure that the names of the folders where your 2nd fasta file is does 
 not have spaces. For example, in the directory `/Users/Name/Desktop/GenBank Sequences/Mycetophilidae Sequences`, 
 remove the space in `GenBank Sequences` and `Mycetophilidae Sequences` or replace them with another character. 
@@ -157,7 +158,7 @@ Click "Proceed" to continue.
 - Hit length cutoff (fraction)
 - Number of hits
 
-<img src="{{ '/assets/img/BlastSearchSettings.png' | relative_url }}" alt="BLAST search settings" width="700">
+<center><img src="{{ '/assets/img/BlastSearchSettings.png' | relative_url }}" alt="BLAST search settings" width="400"></center>
 Once done, click **Ok**.
 
 <br>
@@ -168,7 +169,7 @@ Once done, click **Ok**.
 - Number of processors your computer can use  
 - Species name detection options
 
-<img src="{{ '/assets/img/Homologous-cluster-align-cropped.png' | relative_url }}" alt="Homologous align and cluster" width="700">
+<center><img src="{{ '/assets/img/Homologous-cluster-align-cropped.png' | relative_url }}" alt="Homologous align and cluster" width="400"></center>
 
 <br>
 
@@ -203,7 +204,7 @@ Confirm based on the ID
 - Fixed threshold pass 1: By pass autodetection using fixed distance threshold (proportion)
 - Fixed threshold pass 2: Same as above but for pass 2. (proportion)
 
-<img src="{{ '/assets/img/homologysettings_new.png' | relative_url }}" alt="Find Homology settings" width="500">  
+<center><img src="{{ '/assets/img/homologysettings_new.png' | relative_url }}" alt="Find Homology settings" width="500">  </center>
 Once done, click **Ok**.
 
 <br>
@@ -211,13 +212,13 @@ Once done, click **Ok**.
 #### **Mode 3 Step 4. Once homology search is done:** {#mode-3-step-4}
 
 - Click **"Save log..."** to save the log.  
-  <img src="{{ '/assets/img/Homologysearchwindow_new.png' | relative_url }}" alt="Finish here message" width="700">
+  <center><img src="{{ '/assets/img/Homologysearchwindow_new.png' | relative_url }}" alt="Finish here message" width="500"></center>
 
 - Click **"Finish here"** if you want to end the process and not continue with clustering. A pop-up reminds you to review results in the "Homology" folder of the output folder. **You will then be returned to the start page.**  
-  <img src="{{ '/assets/img/Homologysearch_finishhere.png' | relative_url }}" alt="Finish here message" width="500">
+  <center><img src="{{ '/assets/img/Homologysearch_finishhere.png' | relative_url }}" alt="Finish here message" width="300"></center>
 
 - Or click **"Proceed to clustering"** to move to the clustering step (Continue to **[Step 9](#noext-step-9)**).  
-  <img src="{{ '/assets/img/Homologysearch_proceedtoclustering_new.png' | relative_url }}" alt="Proceed to clustering message" width="500">
+  <center>img src="{{ '/assets/img/Homologysearch_proceedtoclustering_new.png' | relative_url }}" alt="Proceed to clustering message" width="300"></center>
 
 <br>
 
@@ -227,7 +228,7 @@ Once done, click **Ok**.
 - Number of processors your computer can use  
 - Species name detection options
 
-<img src="{{ '/assets/img/Homologous-cluster-align-cropped.png' | relative_url }}" alt="Homologous align and cluster" width="700">
+<img src="{{ '/assets/img/Homologous-cluster-align-cropped.png' | relative_url }}" alt="Homologous align and cluster" width="400">
 
 <br>
 
@@ -237,10 +238,10 @@ Once done, click **Ok**.
 <br>
 
 ---
----
+
 
 ### **Other Homology Search Options with identified reference sequences** {#otheroptions}
-<img src="{{ '/assets/img/Externalsequences_alignmentmode_otheroptions.png' | relative_url }}" alt="Alignment mode" width="500">  
+<center><img src="{{ '/assets/img/Externalsequences_alignmentmode_otheroptions.png' | relative_url }}" alt="Alignment mode" width="400">  </center>
 Not the right option for you? Return to Step 6 [here](#ext-step-6)!
 
 - **Find homology exhaustively**
@@ -257,20 +258,20 @@ Not the right option for you? Return to Step 6 [here](#ext-step-6)!
 		- Fixed threshold pass 1: By pass autodetection using fixed distance threshold (proportion)
 		- Fixed threshold pass 2: Same as above but for pass 2. (proportion)
 			 
-	 <img src="{{ '/assets/img/homologysettings_new.png' | relative_url }}" alt="Find Homology settings" width="500">  
+	<center></center> <img src="{{ '/assets/img/homologysettings_new.png' | relative_url }}" alt="Find Homology settings" width="500">  </center>
 	 Once done, click **Ok**.
 	<br>
 	
 	- **Once homology search is done:** 
 	 
 		- Click **"Save log..."** to save the log.  
-	   <img src="{{ '/assets/img/Homologysearchwindow_new.png' | relative_url }}" alt="Finish here message" width="700">
+	   <img src="{{ '/assets/img/Homologysearchwindow_new.png' | relative_url }}" alt="Finish here message" width="500">
 	 
 		- Click **"Finish here"** to stop and review the "Homology" folder (you’ll return to the start page).  
-	   <img src="{{ '/assets/img/Homologysearch_finishhere.png' | relative_url }}" alt="Finish here message" width="500">
+	   <img src="{{ '/assets/img/Homologysearch_finishhere.png' | relative_url }}" alt="Finish here message" width="300">
 	 
 		- Or **"Proceed to clustering"** (Continue to **[Step 8](#ext-step-8)**).  
-	   <img src="{{ '/assets/img/Homologysearch_proceedtoclustering_new.png' | relative_url }}" alt="Proceed to clustering message" width="500">
+	   <img src="{{ '/assets/img/Homologysearch_proceedtoclustering_new.png' | relative_url }}" alt="Proceed to clustering message" width="300">
  	<br>
 	
 - **Assume homology with my sequences** — Go to **[Step 8](#ext-step-8)**  
@@ -353,7 +354,7 @@ There will be a pop up asking if you if you would want to calculate the summary 
 If you do have species names, it will also calculate the match ratio (Species congruence) and specimen congruence.
 
 <br>
-<img src="{{ '/assets/img/meier-etal-2025_figure1.png' | relative_url }}" alt="Match ratio and specimen congruence figure" width="700">
+<img src="{{ '/assets/img/meier-etal-2025_figure1.png' | relative_url }}" alt="Match ratio and specimen congruence figure" width="500">
 <br>
 <br>
 **Match ratio ([Ahrens et al. 2016](https://doi.org/10.1093/sysbio/syw002))**

@@ -63,7 +63,7 @@ IntegraTax can add those sequences to the clustering in [Step 3](#with-external-
 - Format: A `.csv` file containing species names that corresponds to your sequence headers.
 **Example:** Column A is your sequence header, column B is your species name.
 
-<img src="{{ '/assets/img/speciesnamefile.png' | relative_url }}" alt="Species Name File" width="700"><br>
+<center><img src="{{ '/assets/img/speciesnamefile.png' | relative_url }}" alt="Species Name File" width="400"></center><br>
 
 ---
 

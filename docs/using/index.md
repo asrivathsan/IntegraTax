@@ -261,7 +261,7 @@ Not the right option for you? Return to Step 6 [here](#ext-step-6)!
 		- Fixed threshold pass 1: By pass autodetection using fixed distance threshold (proportion)
 		- Fixed threshold pass 2: Same as above but for pass 2. (proportion)
 			 
-	<center></center> <img src="{{ '/assets/img/homologysettings_new.png' | relative_url }}" alt="Find Homology settings" width="300">  </center>
+	<center> <img src="{{ '/assets/img/homologysettings_new.png' | relative_url }}" alt="Find Homology settings" width="300">  </center>
 	 Once done, click **Ok**.
 	<br>
 	

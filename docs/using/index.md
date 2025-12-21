@@ -14,7 +14,7 @@ has_toc: false
 ## **Table of Contents**
 
 - [What IntegraTax does](#what-integratax-does)
-- [Clustering](#module-1)
+- [Clustering](#module-1-objective-clustering)
   - [Mode 1: Own data](#mode-1)
   - [Mode 2: Own data + reference data](#mode-2)
   - [Mode 3: Clean-up messy data](#mode-3)
@@ -26,7 +26,7 @@ has_toc: false
 
 ---
 
-## **What IntegraTax does**
+## **What IntegraTax does** {#what-integratax-does}
 
 Congratulations! You have accumulated your DNA sequences and are ready to analyse them!
 
@@ -40,10 +40,9 @@ First lets take the sequences through module 1 which gives you several options:
 
 <img src="{{ '/assets/img/Overview.png' | relative_url }}" alt="Species Name File" width="700"><br>
 
-
 ---
 
-## **Module 1: Objective clustering**
+## **Module 1: Objective clustering** {#module-1-objective-clustering}
 
 Typically IntegraTax Clustering module is run in Mode 1 (**one file**) or Mode 2 (**two input FASTA files**). Additionally an experimental Mode 3 is implemented to help you clean up a fasta file with non overlapping regions.
 
@@ -59,7 +58,7 @@ IntegraTax can add those sequences to the clustering in [Step 3](#with-external-
 #### 2. Species name file (optional)
 
 - Only required if you want **manual species name detection** instead of automatic extraction.
-- Format: A `.csv` file containing species names that corresponds to your sequence headers.
+- Format: A .csv file containing species names that corresponds to your sequence headers.
 **Example:** Column A is your sequence header, column B is your species name.
 
 <center><img src="{{ '/assets/img/speciesnamefile.png' | relative_url }}" alt="Species Name File" width="400"></center><br>
@@ -73,14 +72,14 @@ Haven’t installed it yet? [Go to the installation page]({{ "/installation/" | 
 <br>
 
 #### **2. Select the aim of your project** {#step-2}  
-<img src="{{ '/assets/img/ModeSelection.gif' | relative_url }}" alt="Drag and Drop FASTA" width="700"><br>
+<img src="{{ '/assets/img/TitlePage.png' | relative_url }}" alt="Mode Choice Page" width="700"><br>
 <br>
 IntegraTax offers you 3 modes. Click as needed
 <br>
 
-- [**Mode 1**] {#mode-1}: You have a set of sequences for specimens you want to study. The sequences are curated, i.e. you know they are overlapping and are of the target region
-- [**Mode 2**]{#mode-2}: You have sequences for Mode 1, but also want to include some reference sequences that came from earlier studies (e.g. NCBI/BOLD)
-- [**Mode 3**]{#mode-3} You are in an exploratory phase, have downloaded data from GenBank and want to clean it up to overlapping regions. You can clean up the data and cluster.
+- [**Mode 1**](#mode-1): You have a set of sequences for specimens you want to study. The sequences are curated, i.e. you know they are overlapping and are of the target region
+- [**Mode 2**](#mode-2): You have sequences for Mode 1, but also want to include some reference sequences that came from earlier studies (e.g. NCBI/BOLD)
+- [**Mode 3**](#mode-3): You are in an exploratory phase, have downloaded data from GenBank and want to clean it up to overlapping regions. You can clean up the data and cluster.
 
 ---
 
@@ -112,9 +111,9 @@ IntegraTax offers you 3 modes. Click as needed
 - Gap opening  and extension penalty (pairwise alignment mode only)
 	- Allows you to modulate alignment parameters for pairwise alignment
 
-#### **Mode 1 Step 4. Click “Cluster” to begin**. {#mode-1-step-4)
-- After the clustering the dendrogram viewer `.html` will **open automatically** for visualisation (Module 2: Taxonomy)
-- Refer to [Clustering Output files] #clustering-output-files for details of the outputs. 
+#### **Mode 1 Step 4. Click “Cluster” to begin**. {#mode-1-step-4}
+- After the clustering the dendrogram viewer .html will **open automatically** for visualisation (Module 2: Taxonomy)
+- Refer to [Clustering Output files](#clustering-output-files) for details of the outputs. 
 <br>
 
 ---
@@ -141,8 +140,8 @@ Unselect any unwanted species and click **Proceed**.
 #### **Mode 2 Step 4. Select "BLAST based homology search"** {#mode-2-step-4}  
 <center><img src="{{ '/assets/img/Externalsequences_alignmentmode.png' | relative_url }}" alt="Alignment mode" width="300"></center> 
 <br>At this stage, ensure that the names of the folders where your 2nd fasta file is does 
-not have spaces. For example, in the directory `/Users/Name/Desktop/GenBank Sequences/Mycetophilidae Sequences`, 
-remove the space in `GenBank Sequences` and `Mycetophilidae Sequences` or replace them with another character. 
+not have spaces. For example, in the directory /Users/Name/Desktop/GenBank Sequences/Mycetophilidae Sequences, 
+remove the space in GenBank Sequences and Mycetophilidae Sequences or replace them with another character. 
 If there are spaces in the directory, the BLAST based homology search will **fail**!
 
 Other homology search options can be found in the "Other options" button, click [**HERE**](#otheroptions) for more information, warnings, and instructions.
@@ -174,8 +173,8 @@ Once done, click **Ok**.
 <br>
 
 #### **Mode 2 Step 7. Click “Cluster” to begin** {#mode-2-step-7}
-- After the clustering the dendrogram viewer `.html` will **open automatically** for visualisation (Module 2: Taxonomy)
-- Refer to [Clustering Output files] #clustering-output-files for details of the outputs. 
+- After the clustering the dendrogram viewer .html will **open automatically** for visualisation (Module 2: Taxonomy)
+- Refer to [Clustering Output files](#clustering-output-files) for details of the outputs. 
 <br>
 
 ---
@@ -192,6 +191,7 @@ Mode 3 is going to implement a homology search feature. This will use the first 
 #### **Mode 3 Step 2. On loading the first sequence ID will be printed** {#mode-3-step-2}  
 Confirm based on the ID
 <br>
+
 #### **Mode 3 Step 3. Configure the search** {#mode-3-step-3}  
 - Output prefix: This will print the output files with this prefix
 - Max proportion of N: As homology searches are based on similarity, having too many Ns in the references can influence distance calculation. You can exclude the 
@@ -220,7 +220,7 @@ Once done, click **Ok**.
   <center><img src="{{ '/assets/img/Homologysearch_finishhere.png' | relative_url }}" alt="Finish here message" width="300"></center>
 
 - Or click **"Proceed to clustering"** to move to the clustering step (Continue to **[Step 9](#noext-step-9)**).  
-  <center>img src="{{ '/assets/img/Homologysearch_proceedtoclustering_new.png' | relative_url }}" alt="Proceed to clustering message" width="300"></center>
+  <center><img src="{{ '/assets/img/Homologysearch_proceedtoclustering_new.png' | relative_url }}" alt="Proceed to clustering message" width="300"></center>
 
 <br>
 
@@ -235,12 +235,11 @@ Once done, click **Ok**.
 <br>
 
 #### **Mode 2 Step 6. Click “Cluster” to begin** {#mode-2-step-7}
-- After the clustering the dendrogram viewer `.html` will **open automatically** for visualisation (Module 2: Taxonomy)
-- Refer to [Clustering Output files] #clustering-output-files for details of the outputs. 
+- After the clustering the dendrogram viewer .html will **open automatically** for visualisation (Module 2: Taxonomy)
+- Refer to [Clustering Output files](#clustering-output-files) for details of the outputs. 
 <br>
 
 ---
-
 
 ### **Other Homology Search Options with identified reference sequences** {#otheroptions}
 <center><img src="{{ '/assets/img/Externalsequences_alignmentmode_otheroptions.png' | relative_url }}" alt="Alignment mode" width="400">  </center>
@@ -282,33 +281,32 @@ Not the right option for you? Return to Step 6 [here](#ext-step-6)!
 - **Assume homology with my sequences** — Go to **[Step 8](#ext-step-8)**  
 Use this only when you are **absolutely certain** that your identified reference sequences are homologous to your project sequences!!
 
-
 ---
 
 ### **Clustering output files** {#clustering-output-files}
 
-You will receive a nested folder (e.g. `IntegraTaxOut_20251007_101901`) in the same location as your input fasta file containing the following:
+You will receive a nested folder (e.g. IntegraTaxOut_20251007_101901) in the same location as your input fasta file containing the following:
 
 **FILES**
-<br>**1.** `.itv` – used for dendrogram visualisation
-<br>**2.** `IntegraTaxViz.html` – Visualisation of your dendrogram in `.html` format
-<br>**3.** `bins.txt` – 
-<br>**4.** `external.filtered.fa` (If you have identified reference sequences) – A fasta file containing your filtered identified reference sequences (after the blast homology search)
-<br>**5.** `combined.fa` (If you have identified reference sequences) – A combined fasta file containing your project sequences and your filtered identified reference sequences (after the blast homology search)
+<br>**1.** .itv – used for dendrogram visualisation
+<br>**2.** IntegraTaxViz.html – Visualisation of your dendrogram in .html format
+<br>**3.** bins.txt – 
+<br>**4.** external.filtered.fa (If you have identified reference sequences) – A fasta file containing your filtered identified reference sequences (after the blast homology search)
+<br>**5.** combined.fa (If you have identified reference sequences) – A combined fasta file containing your project sequences and your filtered identified reference sequences (after the blast homology search)
 
 **FOLDERS**
-<br>**1.** `cluster` – Contains `iddict.txt`(mapping of IDs) and `_clusterlist`(Shows which sequences group into clusters across different distance thresholds)
-<br>**2.** `pmatrix` – Pairwise matrix files
-<br>**3.** `homology` (If you did a homology search without BLAST) – Contains the histogram and fasta files you should check before clustering
-<br>**3.** `blast` (If you did a homology search with BLAST) – Contains the BLAST database created from your project sequences and results of the BLAST
+<br>**1.** cluster – Contains iddict.txt(mapping of IDs) and _clusterlist(Shows which sequences group into clusters across different distance thresholds)
+<br>**2.** pmatrix – Pairwise matrix files
+<br>**3.** homology (If you did a homology search without BLAST) – Contains the histogram and fasta files you should check before clustering
+<br>**3.** blast (If you did a homology search with BLAST) – Contains the BLAST database created from your project sequences and results of the BLAST
 
 ---
 
 ## **Module 2 Taxonomy** {#module-2}
 
-Once your clustering is complete, the `.html` dendrogram viewer opens automatically.  
+Once your clustering is complete, the .html dendrogram viewer opens automatically.  
 To begin:
-- Click **“Choose File”** and upload the **`.itv` file** from the clustering step.  
+- Click **“Choose File”** and upload the **.itv file** from the clustering step.  
 
 <img src="{{ '/assets/img/visualisationoverview.png' | relative_url }}" alt="Overview of Visualisation" width="700"> **NEEDS REPLACEMENT WITH SPART BUTTON**
 
@@ -316,8 +314,8 @@ To begin:
 
 ### **Visualisation Functions** {#visualisation-functions}
 Here are the main buttons on the top panel. Click below for more details:
-- Choose File: To load the `.itv` for viewing
-- Save: To save your visualisation as a `.itv` file for reloading in the future.
+- Choose File: To load the .itv for viewing
+- Save: To save your visualisation as a .itv file for reloading in the future.
 - [Export](#export)
 - [Summary](#summary)
 - [Color & Text](#colourtext)
@@ -390,7 +388,6 @@ You can edit the colours of the nodes, cluster(subtree) branches, and text here:
 - **Node colour** (*PI/nonPI* / *Binomial name* / *None*):
 - **Text colour** (*Binomial name* / *Cluster* / *Haplotype* / *LIT selections* / *None*)
 
-
 You can change the text settings here:
 - **Node text**: Change the numbers beside the nodes to fusepoints, MaxP(Maximum Pairwise Distance), or Node ID
 - **Terminal text length**: Are your sequence headers too long? You can truncate it to your desired character length. 
@@ -454,7 +451,7 @@ and perform various actions on individual specimens or entire clusters.
 - **Undo** – Revert the most recent change done to the node
 
 **Right-click on a cluster (internal) node** to:
-- **Export FASTA** – Download all sequences in the cluster as a `.fasta` file
+- **Export FASTA** – Download all sequences in the cluster as a .fasta file
 - **Accept lowest code as species name** – Use the lowest specimen code of the cluster as its species name
 - **Enter species name** – Assign a user-defined species name
 - **Collapse / Expand subtree** – Collapse the cluster(subtree) into a single node or to show all specimens in the cluster
@@ -473,12 +470,12 @@ the node to switch between both right-click options.
 
 ### **Saving your progress** {#saving-your-progress}
 
-Click the **"Save"** button to export a `.itv` save file with your edits:
+Click the **"Save"** button to export a .itv save file with your edits:
 
 - Verification status (e.g. verified, cannot be verified)
 - Assigned specimen information (e.g. species names, sex, condition, type status, notes)
 
-To resume your work, upload the `.itv` using the **“Choose File”** button.
+To resume your work, upload the .itv using the **“Choose File”** button.
 
 ---
 

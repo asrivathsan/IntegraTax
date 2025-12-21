@@ -14,7 +14,6 @@ has_toc: false
 ## **Table of Contents**
 
 - [What IntegraTax does](#what-integratax-does)
-- [Input files needed](#input-files-needed)
 - [Clustering](#module-1)
   - [Mode 1: Own data](#mode-1)
   - [Mode 2: Own data + reference data](#mode-2)

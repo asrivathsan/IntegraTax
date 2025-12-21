@@ -88,12 +88,12 @@ IntegraTax offers you 3 modes. Click as needed
 ### **Mode 1** {#mode-1}
 
 #### **Mode 1 Step 1. Drag your FASTA file into the box** {#mode-1-step-1}  
-<img src="{{ '/assets/img/2ndFastaFilePrompt.png' | relative_url }}" alt="Alignment Prompt" width="500"> 
+<img src="{{ '/assets/img/2ndFastaFilePrompt.png' | relative_url }}" alt="Alignment Prompt" width="500"> **NEEDS REPLACEMENT**
 <br>
 
 #### **Mode 1 Step 2. If you have aligned sequences, you will see a pop-up. Otherwise, proceed to [Mode 1 Step 3](#mode-1-step-3)** {#mode-1-step-2}
 <br>
-<img src="{{ '/assets/img/AlignmentPrompt1_cropped.png' | relative_url }}" alt="Alignment Prompt" width="500">  
+<img src="{{ '/assets/img/AlignmentPrompt1_cropped.png' | relative_url }}" alt="Alignment Prompt" width="500">   **NEEDS REPLACEMENT**
 	- If your sequences are already aligned, select **Yes (Aligned)**.  
 	- Otherwise, select **No (Pairwise)**.
 
@@ -126,11 +126,11 @@ This mode is for when you have 2 FASTA files (project and reference files)
 
 #### **Mode 2 Step 1. Drag your Project FASTA file into the box** {#mode-2-step-1}  
 You will notice an alert saying the top sequence is reference sequence. This is because we need to ensure that eventually overlapping regions make it to the dendrogram. The first sequence tunes the hit length parameter in the BLAST search done later. 
-<img src="{{ '/assets/img/2ndFastaFilePrompt.png' | relative_url }}" alt="Alignment Prompt" width="500"> 
+<img src="{{ '/assets/img/2ndFastaFilePrompt.png' | relative_url }}" alt="Alignment Prompt" width="500">  **NEEDS REPLACEMENT**
 <br>
 
 #### **Mode 2 Step 2. Drag your Reference FASTA file into the box** {#mode-2-step-2}  
-<img src="{{ '/assets/img/2ndFastaFilePrompt.png' | relative_url }}" alt="Alignment Prompt" width="500"> 
+<img src="{{ '/assets/img/2ndFastaFilePrompt.png' | relative_url }}" alt="Alignment Prompt" width="500">  **NEEDS REPLACEMENT**
 <br>
 
 #### **Mode 2 Step 3. Select the species you wish to include** {#mode-2-step-3}  
@@ -187,7 +187,7 @@ Mode 3 is a new "homology search" feature implemented in IntegraTax. It takes yo
 #### **Mode 3 Step 1. Drag your FASTA file into the box** {#mode-3-step-1}  
 Mode 3 is going to implement a homology search feature. This will use the first sequence of your file to define the reference and trim the longer or partially overlapping region to the region of interest.
 
-<img src="{{ '/assets/img/2ndFastaFilePrompt.png' | relative_url }}" alt="Alignment Prompt" width="500"> 
+<img src="{{ '/assets/img/2ndFastaFilePrompt.png' | relative_url }}" alt="Alignment Prompt" width="500">  **NEEDS REPLACEMENT**
 <br>
 
 #### **Mode 3 Step 2. On loading the first sequence ID will be printed** {#mode-3-step-2}  
@@ -311,7 +311,7 @@ Once your clustering is complete, the `.html` dendrogram viewer opens automatica
 To begin:
 - Click **“Choose File”** and upload the **`.itv` file** from the clustering step.  
 
-<img src="{{ '/assets/img/visualisationoverview.png' | relative_url }}" alt="Overview of Visualisation" width="700">
+<img src="{{ '/assets/img/visualisationoverview.png' | relative_url }}" alt="Overview of Visualisation" width="700"> **NEEDS REPLACEMENT WITH SPART BUTTON**
 
 ---
 

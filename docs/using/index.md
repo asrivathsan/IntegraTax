@@ -38,7 +38,7 @@ IntegraTax has *two* modules:
 
 First lets take the sequences through module 1 which gives you several options:
 
-<img src="{{ '/assets/img/overview.png' | relative_url }}" alt="Species Name File" width="700"><br>
+<img src="{{ '/assets/img/Overview.tif' | relative_url }}" alt="Species Name File" width="700"><br>
 
 
 ---
@@ -87,7 +87,8 @@ IntegraTax offers you 3 modes. Click as needed
 #### **Mode 1 Step 1. Drag your FASTA file into the box** {#mode-1-step-1}  
 <img src="{{ '/assets/img/2ndFastaFilePrompt.png' | relative_url }}" alt="Alignment Prompt" width="500"> 
 <br>
-#### **Mode 1 Step 2. If you have aligned sequences, you will see a pop-up. Otherwise, proceed to [Mode 1 Step 3](#mode-1-step-3)** {#mode-1-step-2}  
+#### **Mode 1 Step 2. If you have aligned sequences, you will see a pop-up. Otherwise, proceed to [Mode 1 Step 3](#mode-1-step-3)** {#mode-1-step-2}
+<br>
 <img src="{{ '/assets/img/AlignmentPrompt1_cropped.png' | relative_url }}" alt="Alignment Prompt" width="500">  
 	- If your sequences are already aligned, select **Yes (Aligned)**.  
 	- Otherwise, select **No (Pairwise)**.
@@ -104,8 +105,8 @@ IntegraTax offers you 3 modes. Click as needed
 	- **Manual:** Click **"Add species name by file"** and select your [species name file](#2-species-name-file-optional)  
 	- **No detection:** Click **"Do not detect"**
 	
-#### 4. Gap opening  and extension penalty (pairwise alignment mode only)
-- Allows you to modulate alignment parameters for pairwise alignment
+- Gap opening  and extension penalty (pairwise alignment mode only)
+	- Allows you to modulate alignment parameters for pairwise alignment
 
 #### **Mode 1 Step 4. Click “Cluster” to begin**. {#mode-1-step-4)
 - After the clustering the dendrogram viewer `.html` will **open automatically** for visualisation (Module 2: Taxonomy)
@@ -186,8 +187,8 @@ Mode 3 is going to implement a homology search feature. This will use the first 
 
 #### **Mode 3 Step 2. On loading the first sequence ID will be printed** {#mode-3-step-2}  
 Confirm based on the ID
-
-#### **Mode 3 Step 3. Confire the search** {#mode-3-step-3}  
+<br>
+#### **Mode 3 Step 3. Configure the search** {#mode-3-step-3}  
 - Output prefix: This will print the output files with this prefix
 - Max proportion of N: As homology searches are based on similarity, having too many Ns in the references can influence distance calculation. You can exclude the 
 - Number of sequences for 2nd pass: See Mode 3 description. Number of sampled sequences.

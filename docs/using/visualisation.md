@@ -7,7 +7,7 @@ has_toc: false
 ---
 
 <script>
-  window.location.href = "{{ '/using/#visualisation' | relative_url }}";
+  window.location.href = "{{ '/using/#module-2' | relative_url }}";
 </script>
 
-If you're not redirected, [click here]({{ '/using/#visualisation' | relative_url }}).
+If you're not redirected, [click here]({{ '/using/#module-2' | relative_url }}).

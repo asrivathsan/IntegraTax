@@ -34,6 +34,7 @@ Congratulations! You have accumulated your DNA sequences and are ready to analys
 IntegraTax has *two* modules:
 
 **1.** **Clustering:** Groups your sequences into sets of speciemen based on pairwise distances hierarchically (single linkage/ Onjective clustering)
+<br>
 **2.** **Taxonomy:** For annotation of the clusters and specimens as a dendrogram (Cluster Fusion Diagram). 
 
 First lets take the sequences through module 1 which gives you several options:

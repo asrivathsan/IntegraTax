@@ -9,7 +9,7 @@ nav_order: 0
 
 **IntegraTax** is a user-friendly software for clustering DNA sequences and an interactive workspace with dendrograms to support species delimitation and taxonomic research.
 
-IntegraTax separates hierarchical cluster generation from taxonomic interpretation. Clustering hierarchies and distance information are generated once and preserved, while taxonomic decisions are made, revised, and recorded in a browser based workspace. The architecture of IntegraTax treats taxonomic interpretation as an ongoing interaction with the preserved hierarchy and its properties, rather than as a downstream step based on derived summaries. This supports iterative integrative taxonomy without fixing outcomes prematurely. 
+IntegraTax supports taxonomic decision-making directly on barcode-based hierarchies, with clustering structure and associated distance information generated once and retained while decisions are made and revised in a browser-based workspace. The architecture of IntegraTax treats taxonomic interpretation as an ongoing interaction with the preserved hierarchy and its properties, rather than as a downstream step based on derived summaries. 
 
 ## Get Started
 

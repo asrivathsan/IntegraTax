@@ -86,15 +86,16 @@ IntegraTax offers you 3 modes. Click as needed
 ### **Mode 1** {#mode-1}
 
 #### **Mode 1 Step 1. Drag your FASTA file into the box** {#mode-1-step-1}  
-<img src="{{ '/assets/img/DragFastaHere.png' | relative_url }}" alt="Alignment Prompt" width="500"> 
+<br>
+<center><img src="{{ '/assets/img/DragFastaHere.png' | relative_url }}" alt="Alignment Prompt" width="500"> </center>
 <br>
 
-#### **Mode 1 Step 2. If you have aligned sequences, you will see a pop-up. Otherwise, proceed to [Mode 1 Step 3](#mode-1-step-3)** {#mode-1-step-2}
+#### **Mode 1 Step 2. If you have sequences of equal length (incl., if present, gaps), you will see a pop-up. Otherwise, proceed to [Mode 1 Step 3](#mode-1-step-3)** {#mode-1-step-2}
 <br>
-<img src="{{ '/assets/img/AlignedFastaPrompt.png' | relative_url }}" alt="Alignment Prompt" width="500">
+<center></center><img src="{{ '/assets/img/AlignedFastaPrompt.png' | relative_url }}" alt="Alignment Prompt" width="300"></center>
 <br>
 	- If your sequences are already aligned, select **Yes**.  
-	- Otherwise, select **No**.
+	- Otherwise, select **No**. 
 
 #### **Mode 1 Step 3. Set up your clustering configuration** {#mode-1-step-3} 
 <br>
@@ -124,12 +125,14 @@ This mode is for when you have 2 FASTA files (project and reference files)
 <br>
 
 #### **Mode 2 Step 1. Drag your Project FASTA file into the box** {#mode-2-step-1}  
+<br>
 You will notice an alert saying the top sequence is reference sequence. This is because we need to ensure that eventually overlapping regions make it to the dendrogram. The first sequence tunes the hit length parameter in the BLAST search done later. 
-<img src="{{ '/assets/img/ProjectFastaMode2.png' | relative_url }}" alt="Alignment Prompt" width="500">
+<center><img src="{{ '/assets/img/ProjectFastaMode2.png' | relative_url }}" alt="Alignment Prompt" width="500"></center>
 <br>
 
 #### **Mode 2 Step 2. Drag your Reference FASTA file into the box** {#mode-2-step-2}  
-<img src="{{ '/assets/img/ReferenceFastaMode2.png' | relative_url }}" alt="Alignment Prompt" width="500">
+<br>
+<center><img src="{{ '/assets/img/ReferenceFastaMode2.png' | relative_url }}" alt="Alignment Prompt" width="500"></center>
 <br>
 
 #### **Mode 2 Step 3. Select the species you wish to include** {#mode-2-step-3}  
@@ -140,7 +143,7 @@ Unselect any unwanted species and click **Proceed**.
 
 #### **Mode 2 Step 4. Select "BLAST based homology search"** {#mode-2-step-4}  
 <center><img src="{{ '/assets/img/Externalsequences_alignmentmode.png' | relative_url }}" alt="Alignment mode" width="300"></center> 
-<br>At this stage, ensure that the names of the folders where your 2nd fasta file is does not have spaces. For example, in the directory /Users/Name/Desktop/GenBank Sequences/Mycetophilidae Sequences, 
+<br>At this stage, ensure that the names of the folders where your 2nd fasta file does not have spaces. For example, in the directory /Users/Name/Desktop/GenBank Sequences/Mycetophilidae Sequences, 
 remove the space in GenBank Sequences and Mycetophilidae Sequences or replace them with another character. 
 If there are spaces in the directory, the BLAST based homology search will **fail**!
 
@@ -180,7 +183,9 @@ Once done, click **Ok**.
 ---
 
 ### **Mode 3** {#mode-3}
-Mode 3 is a new "homology search" feature implemented in IntegraTax. It takes your first sequence in the fasta file, finds distances of this sequence from other files (Pass 1). Builds a distance profile and then implements KDE to smoothen the curve. It finds the antimode of this curve as a break point, and trims sequences falling within the distributio to overlapping areas. It then repeats this with 10 (default) sequences sampled across the distance profile of the first sequence to reduce biases introduced by your first reference (pass 2). 
+Mode 3 is a homology search feature implemented in IntegraTax. It uses the first sequence in the input FASTA file as an initial reference and computes pairwise distances between this sequence and all other sequences (Pass 1). These distances are used to construct a distance distribution, which is smoothed using a Kernel Density Estimator (KDE). The antimode (valley) of the smoothed distribution is identified as a breakpoint, and sequences whose distances fall within overlapping regions of the distribution are trimmed.
+
+To reduce bias introduced by relying on a single reference sequence, the procedure is repeated using N sequences (default: 10) sampled across the distance profile of the first pass (Pass 2).
 
 #### **Mode 3 Step 1. Drag your FASTA file into the box** {#mode-3-step-1}  
 Mode 3 is going to implement a homology search feature. This will use the first sequence of your file to define the reference and trim the longer or partially overlapping region to the region of interest.

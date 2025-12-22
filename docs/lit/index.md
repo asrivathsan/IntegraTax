@@ -116,7 +116,7 @@ be BMY0001343. Check that alternative specimen and the other LIT selected specim
 <br>
 
 **8.** Want to pause and resume later?  
-   Click the **“Save”** button to export a `.csv` file with your progress.  
+   Click the **“Save”** button to export a `.itv` file with your progress.  
    [Learn how to save and reload]({{ "/using/#saving-your-progress" | relative_url }}).
 
 <br>

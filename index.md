@@ -9,7 +9,7 @@ nav_order: 0
 
 **IntegraTax** is a user-friendly software for clustering DNA sequences and an interactive workspace with dendrograms to support species delimitation and taxonomic research.
 
-IntegraTax separates hierarchical cluster generation from interactive taxonomic interpretation. Clustering hierarchies and distance information are generated once and preserved, while taxonomic decisions are made, revised, and recorded in an interactive workspace. This design supports iterative integrative taxonomy without fixing outcomes prematurely. Revisions that occur interactively are stored with the project itself.
+IntegraTax separates hierarchical cluster generation from taxonomic interpretation. Clustering hierarchies and distance information are generated once and preserved, while taxonomic decisions are made, revised, and recorded in a browser based workspace. This design supports iterative integrative taxonomy without fixing outcomes prematurely. Revisions that occur interactively are stored with the project itself.
 
 ## Get Started
 
@@ -31,7 +31,7 @@ An overview of clustering module implemented as IntegraTax executable
 
 **2.** **Taxonomy** - An interactive workspace that displays the clusters and specimens as an dendrogram (Cluster Fusion Diagram) that can be annotated by taxonomists.
 <br><br>
-IntegraTax places taxon-relevant classification and summary calculations directly within the interactive workspace. Unstable clusters, LIT-based specimen groupings, congruence-based dendrogram colouring, alternative species hypotheses, and measures such as match ratios, specimen congruence, and SPART summaries are handled on the hierarchy itself, enabling progressive taxonomic decisions without reliance on external, snapshot summaries.
+IntegraTax places taxon-relevant classification and summary calculations directly within the workspace. Unstable clusters, LIT-based specimen groupings, congruence-based dendrogram colouring, alternative species hypotheses, and measures such as match ratios, specimen congruence, and SPART summaries are handled on the hierarchy itself, enabling progressive taxonomic decisions without reliance on external, snapshot summaries.
 <br> A snapshot of IntegraTaxViz.html
 <br>
 

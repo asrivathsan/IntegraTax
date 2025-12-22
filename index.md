@@ -24,8 +24,7 @@ IntegraTax separates hierarchical cluster generation from interactive interpreta
 IntegraTax provides two core functions:
 
 **1.** **Clustering** - Generates complete single-linkage hierarchies with information required for later taxonomic decisions. This information is preserved rather than collapsed into fixed clusters.
-
-<br> An overview of clustering module implemented as IntegraTax executable
+An overview of clustering module implemented as IntegraTax executable
 <br>
 
 <img src="{{ '/assets/img/Overview.png' | relative_url }}" alt="Species Name File" width="700"><br>

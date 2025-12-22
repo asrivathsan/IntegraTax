@@ -72,7 +72,8 @@ Haven’t installed it yet? [Go to the installation page]({{ "/installation/" | 
 <br>
 
 #### **2. Select the aim of your project** {#step-2}  
-<img src="{{ '/assets/img/TitlePage.png' | relative_url }}" alt="Mode Choice Page" width="700"><br>
+<br>
+<center><img src="{{ '/assets/img/TitlePage.png' | relative_url }}" alt="Mode Choice Page" width="500"><br></center>
 <br>
 IntegraTax offers you 3 modes. Click as needed
 <br>

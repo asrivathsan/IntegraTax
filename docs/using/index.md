@@ -92,7 +92,7 @@ IntegraTax offers you 3 modes. Click as needed
 
 #### **Mode 1 Step 2. If you have sequences of equal length (incl., if present, gaps), you will see a pop-up. Otherwise, proceed to [Mode 1 Step 3](#mode-1-step-3)** {#mode-1-step-2}
 <br>
-<center></center><img src="{{ '/assets/img/AlignedFastaPrompt.png' | relative_url }}" alt="Alignment Prompt" width="300"></center>
+<center><img src="{{ '/assets/img/AlignedFastaPrompt.png' | relative_url }}" alt="Alignment Prompt" width="300"></center>
 <br>
 	- If your sequences are already aligned, select **Yes**.  
 	- Otherwise, select **No**. 

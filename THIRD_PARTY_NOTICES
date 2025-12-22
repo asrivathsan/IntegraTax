@@ -1,0 +1,11 @@
+This project includes third-party software:
+
+D3.js
+Copyright (c) 2010–2024, Mike Bostock
+Licensed under the BSD 3-Clause License.
+https://github.com/d3/d3
+
+ExcelJS
+Copyright (c) 2014–2024, ExcelJS contributors
+Licensed under the MIT License.
+https://github.com/exceljs/exceljs

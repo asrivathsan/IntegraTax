@@ -189,13 +189,13 @@ To reduce bias introduced by relying on a single reference sequence, the procedu
 
 #### **Mode 3 Step 1. Drag your FASTA file into the box** {#mode-3-step-1}  
 Mode 3 is going to implement a homology search feature. This will use the first sequence of your file to define the reference and trim the longer or partially overlapping region to the region of interest.
-
-<img src="{{ '/assets/img/DragProjectFastaMode3.png' | relative_url }}" alt="Alignment Prompt" width="500">
+<br>
+<center><img src="{{ '/assets/img/DragProjectFastaMode3.png' | relative_url }}" alt="Alignment Prompt" width="500"></center>
 <br>
 
 #### **Mode 3 Step 2. On loading the first sequence ID will be printed** {#mode-3-step-2}  
 Confirm based on the ID
-<img src="{{ '/assets/img/IDpromptMode3.png' | relative_url }}" alt="Alignment Prompt" width="500">
+<center><img src="{{ '/assets/img/IDpromptMode3.png' | relative_url }}" alt="Alignment Prompt" width="300"></center>
 <br>
 
 #### **Mode 3 Step 3. Configure the search** {#mode-3-step-3}  

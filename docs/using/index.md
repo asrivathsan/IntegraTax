@@ -38,8 +38,6 @@ IntegraTax has *two* modules:
 
 First lets take the sequences through module 1 which gives you several options:
 
-<img src="{{ '/assets/img/Overview.png' | relative_url }}" alt="Species Name File" width="700"><br>
-
 ---
 
 ## **Module 1: Objective clustering** {#module-1-objective-clustering}

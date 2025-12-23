@@ -35,4 +35,4 @@ IntegraTax places taxon-relevant classification and summary calculations directl
 <br> A snapshot of IntegraTaxViz.html
 <br>
 
-<img src="{{ '/assets/img/visualisationoverview.png' | relative_url }}" alt="Overview of Visualisation" width="700"> **NEEDS REPLACEMENT WITH SPART BUTTON**
+<img src="{{ '/assets/img/visualisationoverviewwithspart.png' | relative_url }}" alt="Overview of Visualisation" width="700"> 

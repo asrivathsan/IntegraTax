@@ -315,7 +315,7 @@ Once your clustering is complete, the .html dendrogram viewer opens automaticall
 To begin:
 - Click **“Choose File”** and upload the **.itv file** from the clustering step.  
 
-<img src="{{ '/assets/img/visualisationoverview.png' | relative_url }}" alt="Overview of Visualisation" width="700"> **NEEDS REPLACEMENT WITH SPART BUTTON**
+<img src="{{ '/assets/img/visualisationoverviewwithspart.png' | relative_url }}" alt="Overview of Visualisation" width="700"> 
 
 ---
 

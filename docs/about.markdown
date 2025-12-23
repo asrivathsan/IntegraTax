@@ -17,7 +17,7 @@ permalink: /about/
 <br>
 **Citation:**
 <br>
-Srivathsan A.,..... Meier, R. 202X. XXX....
+Srivathsan A., Lee, L., Feng, V., Meier, R. 2025. Integrative Taxonomy: From FASTA Pain to Species Gain with the interactive “IntegraTax”.
 
 
 

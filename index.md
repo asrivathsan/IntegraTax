@@ -23,7 +23,7 @@ IntegraTax supports taxonomic decision-making directly on barcode-based hierarch
 
 IntegraTax provides two core functions:
 
-**1.** **Clustering** - Generates complete single-linkage hierarchies with information required for later taxonomic decisions. This information is preserved rather than collapsed into fixed clusters.
+**1.** **Clustering** - Generates complete single-linkage hierarchies with information required for later taxonomic decisions.
 An overview of clustering module implemented as IntegraTax executable
 <br>
 

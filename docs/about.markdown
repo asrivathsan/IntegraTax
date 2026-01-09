@@ -11,13 +11,10 @@ permalink: /about/
 <br>
 **BlueSky:** 
 <br>
-**X:** [Center for Integrative Biodiversity Discovery](https://x.com/CIBD_mfnberlin)
-<br>
-<br>
 <br>
 **Citation:**
 <br>
-Srivathsan A., Lee, L., Feng, V., Meier, R. 2025. Integrative Taxonomy: From FASTA Pain to Species Gain with the interactive “IntegraTax”.
+Srivathsan A., Lee, L., Feng, V., Meier, R. 2025. Integrative Taxonomy: From FASTA Pain to Species Gain with the interactive “IntegraTax”. bioRxiv, doi:https://doi.org/10.64898/2025.12.22.695429.
 
 
 

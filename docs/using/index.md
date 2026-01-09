@@ -48,7 +48,7 @@ Typically IntegraTax Clustering module is run in Mode 1 (**one file**) or Mode 2
 
 #### 1. FASTA file(s)
 
-- There no length limit to sequence headers but it would be beneficial to them organized. If you have specimen codes, the format compatible with IntegraTax is alphanumeric, such as ZRC00001 or similar to accession codes in GenBank. FASTA file can be aligned or not unaligned. 
+- There no length limit to sequence headers but it would be beneficial to keep them organized. If you have specimen codes, the format compatible with IntegraTax is alphanumeric, such as ZRC00001 or similar to accession codes in GenBank. FASTA file can be aligned or not unaligned. 
 
 NOTE: If you have a 2nd fasta file with identified reference sequences for Mode 2 (e.g. from NCBI genbank or BOLD or sequences from other projects), 
 IntegraTax can add those sequences to the clustering in [Step 3](#with-external-sequences). This file need not be aligned as this mode is always run with pairwise alignments

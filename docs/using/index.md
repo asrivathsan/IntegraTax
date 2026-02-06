@@ -29,10 +29,15 @@ has_toc: false
 ## **What IntegraTax does** {#what-integratax-does}
 
 Congratulations! You have accumulated your DNA sequences and are ready to analyse them!
+You can use the [test files](https://github.com/asrivathsan/IntegraTax/blob/f1fa5d3cd493d3fa00b7b97fbb28257976843ef9/testfiles/all_test_files_fasta_spart_reference.zip) archive to download files to figure the software out. 
+
+- Singapore_mycetophilidae_dataset1.fasta : Project fasta file from [Amorim et al. 2025](https://doi.org/10.18476/2025.752376)/[Meier et al. 2025](https://doi.org/10.1111/cla.12609)
+- Singapore_mycetophilidae_dataset1.spart : Spart file generated via [SpartExplorer](https://spartexplorer.mnhn.fr/)
+- BLAST_reference_myceto_genbank : Uncurated references from GenBank for Mycetophilidae.
 
 IntegraTax has *two* modules:
 
-**1.** **Clustering:** Groups your sequences into sets of speciemen based on pairwise distances hierarchically (single linkage/ Onjective clustering)
+**1.** **Clustering:** Groups your sequences into sets of speciemen based on pairwise distances hierarchically (single linkage/ Objective clustering)
 <br>
 **2.** **Taxonomy:** For annotation of the clusters and specimens as a dendrogram (Cluster Fusion Diagram). 
 
@@ -295,15 +300,14 @@ You will receive a nested folder (e.g. IntegraTaxOut_20251007_101901) in the sam
 **FILES**
 <br>**1.** .itv – used for dendrogram visualisation
 <br>**2.** IntegraTaxViz.html – Visualisation of your dendrogram in .html format
-<br>**3.** bins.txt – 
-<br>**4.** external.filtered.fa (If you have identified reference sequences) – A fasta file containing your filtered identified reference sequences (after the blast homology search)
-<br>**5.** combined.fa (If you have identified reference sequences) – A combined fasta file containing your project sequences and your filtered identified reference sequences (after the blast homology search)
+<br>**3.** external.filtered.fa (If you have identified reference sequences) – A fasta file containing your filtered identified reference sequences (after the blast homology search)
+<br>**4.** combined.fa (If you have identified reference sequences) – A combined fasta file containing your project sequences and your filtered identified reference sequences (after the blast homology search)
 
 **FOLDERS**
 <br>**1.** cluster – Contains iddict.txt(mapping of IDs) and _clusterlist(Shows which sequences group into clusters across different distance thresholds)
 <br>**2.** pmatrix – Pairwise matrix files
 <br>**3.** homology (If you did a homology search without BLAST) – Contains the histogram and fasta files you should check before clustering
-<br>**3.** blast (If you did a homology search with BLAST) – Contains the BLAST database created from your project sequences and results of the BLAST
+<br>**4.** blast (If you did a homology search with BLAST) – Contains the BLAST database created from your project sequences and results of the BLAST
 
 ---
 

@@ -61,7 +61,7 @@ IntegraTax can add those sequences to the clustering in [Step 3](#with-external-
 #### 2. Species name file (optional)
 
 - Only required if you want **manual species name detection** instead of automatic extraction.
-- Format: A .csv file containing species names that corresponds to your sequence headers.
+- Format: A .tsv (tab delimited) file containing species names that corresponds to your sequence headers
 **Example:** Column A is your sequence header, column B is your species name.
 
 <center><img src="{{ '/assets/img/speciesnamefile.png' | relative_url }}" alt="Species Name File" width="400"></center><br>

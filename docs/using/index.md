@@ -207,7 +207,7 @@ Confirm based on the ID
 - Max proportion of N: As homology searches are based on similarity, having too many Ns in the references can influence distance calculation. You can exclude the 
 - Number of sequences for 2nd pass: See Mode 3 description. Number of sampled sequences.
 - Min length fraction: Minimum length of overlap required to be considered a homologous fragment. 0.75 is default and this is because in fragmented landscape, this will ensure sufficient overlap between two partial sequences 
-- Bandwidth: The distance distribution is smoothened by a Kernel Density Estimator implemented in SciPy, where the bandwidth is automatically selected using Silverman’s or Scott’s rule based on the data variance and sample size.
+- Bandwidth: The distance distribution is smoothened by a Kernel Density Estimator implemented in SciPy, where the bandwidth is selected using Silverman’s or Scott’s rule.
 - KDE q_low: Lower quantile of the KDE-smoothed distance distribution used to restrict the analysis range and suppress extreme low-end outliers.
 - KDE q_high: Upper quantile of the KDE-smoothed distance distribution used to restrict the analysis range and suppress extreme high-end outliers.
 - Min prominence: Minimum required depth of a valley (relative to surrounding peaks) for it to be considered significant.
@@ -262,7 +262,7 @@ Not the right option for you? Return to [Mode 2 Step 4](#mode-2-step-4)!
 		- Max proportion of N: As homology searches are based on similarity, having too many Ns in the references can influence distance calculation. You can exclude the 
 		- Number of sequences for 2nd pass: See Mode 3 description. Number of sampled sequences.
 		- Min length fraction: Minimum length of overlap required to be considered a homologous fragment. 0.75 is default and this is because in fragmented landscape, this will ensure sufficient overlap between two partial sequences 
-		- Bandwidth: The distance distribution is smoothened by a Kernel Density Estimator implemented in SciPy, where the bandwidth is automatically selected using Silverman’s or Scott’s rule based on the data variance and sample size.
+		- Bandwidth: The distance distribution is smoothened by a Kernel Density Estimator implemented in SciPy, where the bandwidth is selected using Silverman’s or Scott’s rule.
 		- KDE q_low: Lower quantile of the KDE-smoothed distance distribution used to restrict the analysis range and suppress extreme low-end outliers.
 		- KDE q_high: Upper quantile of the KDE-smoothed distance distribution used to restrict the analysis range and suppress extreme high-end outliers.
 		- Min prominence: Minimum required depth of a valley (relative to surrounding peaks) for it to be considered significant.

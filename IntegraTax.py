@@ -29,9 +29,7 @@ import traceback
 from collections import OrderedDict
 import struct
 import pickle
-import faulthandler
 
-faulthandler.enable()
 
 progress_value_g=None
 progress_lock_g=None
@@ -416,19 +414,39 @@ class BlastRunner(QtCore.QThread):
                         pass
 
     def run(self):
-        outprefix=self.opts["outprefix"]
-        dbpath=outprefix+"_db"
-        blastout=outprefix+".tsv"
-        finalfa=outprefix+".final.fa"
-        qclean=outprefix+".query.cleaned.fa"
-        seen={}
+        outprefix = self.opts["outprefix"]
+        paths_to_check = [
+            self.query_fa,
+            self.db_fa,
+            outprefix,
+            os.path.dirname(outprefix),
+        ]
+        bad_paths = [p for p in paths_to_check if p and " " in p]
+
+        if bad_paths:
+            self.notifyLine.emit(
+                "WARNING: BLAST step skipped because one or more paths contain spaces."
+            )
+            for p in bad_paths:
+                self.notifyLine.emit(f"  problematic path: {p}")
+            self.notifyLine.emit(
+                "Please move your project / output to a directory without spaces "
+                "if you want BLAST to run."
+            )
+            self.taskFinished.emit(0, outprefix)
+            return
+        dbpath = outprefix + "_db"
+        blastout = outprefix + ".tsv"
+        finalfa = outprefix + ".final.fa"
+        qclean = outprefix + ".query.cleaned.fa"
+        seen = {}
         with open(self.query_fa) as fh:
             seqid, seq=None, []
             for line in fh:
                 if line.startswith(">"):
                     if seqid:
                         clean="".join(seq).replace("-", "").replace("?", "").upper()
-                        clean=normalize_sequence(clean)
+                        clean=simpifyambs(clean)
                         if clean and clean not in seen:
                             seen[clean]=seqid
                     seqid=line.strip()[1:]
@@ -437,7 +455,7 @@ class BlastRunner(QtCore.QThread):
                     seq.append(line.strip())
             if seqid:
                 clean="".join(seq).replace("-", "").replace("?", "").upper()
-                clean=normalize_sequence(clean)
+                clean=simpifyambs(clean)
                 if clean and clean not in seen:
                     seen[clean]=seqid
 
@@ -998,9 +1016,7 @@ class HomologySettingsDialog(QtWidgets.QDialog):
             "thresh1": opt_from_spin(self.fthresh1),
             "thresh2": opt_from_spin(self.fthresh2),
         }
-   #     if p["fixed_threshold"]=="": p["fixed_threshold"]=None
-   #     if p["pass2_fixed_threshold"]=="": p["pass2_fixed_threshold"]=None
-     #   return p
+
 def get_mp_context():
 
     if getattr(sys, "frozen", False) or sys.platform.startswith("win"):
@@ -1069,7 +1085,6 @@ class PicButton(QtWidgets.QAbstractButton):
         self.pixmap_hover=pixmap_hover
         self.pixmap_pressed=pixmap_pressed
         self.toggled.connect(self.setcheckedbtn)
-      #   self.released.connect(self.update)
 
     def paintEvent(self, event):
         if self.isChecked():
@@ -1352,7 +1367,6 @@ class measuredist(QtCore.QThread):
     def cancel(self):
         self._should_cancel=True
     def run(self):
-        # --- Local aliases
         seqdict1  =self.seqdict1
         seqiddict =self.seqiddict
         hasn      =self.hasN_flags
@@ -1407,7 +1421,6 @@ class measuredist(QtCore.QThread):
         pool=None
         try:
             self.notifyProgress.emit(-2)
-        #    self.notifyProgress.emit(0)
 
             ctx=get_mp_context()
 
@@ -1469,9 +1482,7 @@ class measuredist(QtCore.QThread):
                         pool.join(timeout=10)
                     except Exception:
                         pass
-                    # Inform GUI
                     self.taskFinished.emit([("CANCELLED", None)])
-                    # Ensure DistanceStarter catches cancel
                     raise SystemExit("__CANCELLED__")
                 else:
                     raise
@@ -1519,6 +1530,34 @@ class measuredist(QtCore.QThread):
                     del pool
 
 
+class FileDropBox(QtWidgets.QFrame):
+    fileDropped=QtCore.pyqtSignal(str)
+    def __init__(self,parent=None):
+        super(FileDropBox,self).__init__(parent)
+        self.setAcceptDrops(True)
+        self.setProperty("dragover", False)
+    def dragEnterEvent(self,e):
+        if e.mimeData().hasUrls():
+            e.acceptProposedAction()
+            self.setProperty("dragover", True)
+            self.style().unpolish(self)
+            self.style().polish(self)
+            self.update()
+    def dragLeaveEvent(self,e):
+        self.setProperty("dragover", False)
+        self.style().unpolish(self)
+        self.style().polish(self)
+        self.update()
+    def dropEvent(self,e):
+        self.setProperty("dragover", False)
+        self.style().unpolish(self)
+        self.style().polish(self)
+        self.update()
+        urls=e.mimeData().urls()
+        if urls:
+            fn=str(urls[0].toLocalFile())
+            if fn:
+                self.fileDropped.emit(fn)
 
 
 class OptWindow(QtWidgets.QWidget): 
@@ -1530,7 +1569,11 @@ class OptWindow(QtWidgets.QWidget):
         self.stack=QtWidgets.QStackedWidget(self)
         self.layout=QtWidgets.QVBoxLayout(self)
         self.layout.addWidget(self.stack)
-        self.initFileSelectionScreen()
+        self.initfileselectionscreen()
+        self.initM2ProjectScreen()
+        self.initM2ReferenceScreen()
+        self.initM3ProjectScreen()
+
         self.initExternalSeqScreen()
         self.initAlignmentQuestionScreen()
         self.initHomFragScreen()
@@ -1541,56 +1584,235 @@ class OptWindow(QtWidgets.QWidget):
         self.setLayout(self.layout)
         self.runroot=None
         self._prev_cwd=None
+        self.hasN_flags={}
         self.show()
 
-
-    def initFileSelectionScreen(self):
+    def initfileselectionscreen(self):
         file_select_widget=QtWidgets.QWidget()
         outer_layout=QtWidgets.QVBoxLayout(file_select_widget)
-        outer_layout.setContentsMargins(40, 40, 40, 40)
+        outer_layout.setContentsMargins(40,40,40,40)
 
         container=QtWidgets.QWidget()
         container.setObjectName("mainContainer")
-        container.setSizePolicy(QtWidgets.QSizePolicy.Expanding, QtWidgets.QSizePolicy.Expanding)
+        container.setSizePolicy(QtWidgets.QSizePolicy.Expanding,QtWidgets.QSizePolicy.Expanding)
 
         container_layout=QtWidgets.QVBoxLayout(container)
         container_layout.setAlignment(QtCore.Qt.AlignTop)
-        container_layout.setContentsMargins(40, 40, 40, 40)
+        container_layout.setContentsMargins(40,40,40,40)
 
         logo_label=QtWidgets.QLabel()
         logo_path=resource_path("logos/softwarelogo.jpg")
         pixmap=QtGui.QPixmap(logo_path)
-        pixmap=pixmap.scaledToWidth(180, QtCore.Qt.SmoothTransformation)
+        pixmap=pixmap.scaledToWidth(180,QtCore.Qt.SmoothTransformation)
         logo_label.setPixmap(pixmap)
         logo_label.setAlignment(QtCore.Qt.AlignCenter)
         container_layout.addWidget(logo_label)
 
-        self.label=QtWidgets.QLabel("Drag input FASTA file here", self)
-        self.label.setObjectName("dragLabel")
-        self.label.setAlignment(QtCore.Qt.AlignCenter)
-        self.label.setStyleSheet("""
-            QLabel#dragLabel {
-                font-size: 18px;
-                font-weight: bold;
-                color: #444;
-                padding: 120px 20px;
-                background-color: transparent;
-                border: none;
-            }
-        """)
-        self.setAcceptDrops(True)
-        container_layout.addWidget(self.label)
+        subtitle=QtWidgets.QLabel("What do you want to do today?")
+        subtitle.setStyleSheet("font-size: 20px; font-weight: bold;")
+        subtitle.setAlignment(QtCore.Qt.AlignCenter)
+        container_layout.addWidget(subtitle)
+
+        container_layout.addSpacing(20)
+
+        self.btn_proj=self._makemodebtn("Cluster my own data")
+        self.btn_proj_ext=self._makemodebtn("Cluster my data with reference")
+        self.btn_ext_nonaln=self._makemodebtn("Clean up messy data")
+
+        self.btn_proj.clicked.connect(self._start_proj)
+        self.btn_proj_ext.clicked.connect(self._start_proj_ext)
+        self.btn_ext_nonaln.clicked.connect(self._start_ext_nonaln)
+
+        btn_layout=QtWidgets.QVBoxLayout()
+        btn_layout.setSpacing(18)
+        btn_layout.addWidget(self.btn_proj)
+        btn_layout.addWidget(self.btn_proj_ext)
+        btn_layout.addWidget(self.btn_ext_nonaln)
+
+        container_layout.addLayout(btn_layout)
+        container_layout.addStretch()
 
         container.setStyleSheet("""
             QWidget#mainContainer {
-                border: 2px dashed #999;
+                border: none;
+                background-color: #ffffff;
+            }
+            QPushButton#modebtn {
+                border: 2px dashed #006400;
                 border-radius: 12px;
                 background-color: #ffffff;
+                color: #006400;
+                padding: 12px 18px;
+                font-size: 16pt;
+                min-height: 60px;
+                text-align: center;
+            }
+            QPushButton#modebtn:hover {
+                border-style: solid;
+                background-color: #006400;
+                color: #ffffff;
+            }
+            QPushButton#modebtn:pressed {
+                border-style: solid;
+                background-color: #004000;
+                color: #ffffff;
             }
         """)
 
         outer_layout.addWidget(container)
         self.stack.addWidget(file_select_widget)
+    def _m3_project_loaded(self, path):
+        if not path:
+            return
+
+        self.infilename = path
+        self.indir = os.path.dirname(os.path.abspath(path))
+        self.runroot = _mk_run_root(path)
+
+        self.loadseqs(path)
+        self.projectcount = self.seqcounts
+
+        self.pre_filter_count = self.projectcount
+        self.extloadedlabel.setVisible(True)
+
+        if not self.sequences:
+            QtWidgets.QMessageBox.warning(self, "Error", "No sequences found.")
+            return
+        ref_id = next(iter(self.sequences.keys()))
+        ref_seq = self.sequences[ref_id]
+        ref_len = len(ref_seq)
+
+
+        msg = QtWidgets.QMessageBox(self)
+        msg.setWindowTitle("Confirm reference sequence")
+        msg.setIcon(QtWidgets.QMessageBox.Question)
+        msg.setText(
+            f"The FIRST sequence will be used as reference:\n\n"
+            f"ID: {ref_id}\n"
+            f"Length: {ref_len}\n\n"
+            "Is this correct?"
+        )
+        msg.setStandardButtons(QtWidgets.QMessageBox.Yes | QtWidgets.QMessageBox.No)
+
+        if msg.exec_() != QtWidgets.QMessageBox.Yes:
+            self.resetToStart()
+            return
+        self.mode = "hom"
+        self._hom_input_fasta = path
+        self._hom_input_count = self.projectcount
+
+        self.openhomologysettings()
+
+    def _m2_project_loaded(self, path):
+        if not path:
+            return
+        self._force_mode_on_load = "hom"
+        self.infilename = path
+        self.indir = os.path.dirname(os.path.abspath(path))
+        self.runroot = _mk_run_root(path)
+        self.loadseqs(path)
+        self.projectcount = self.seqcounts
+        self.stack.setCurrentIndex(self.m2_reference_index)
+    def _m2_reference_loaded(self, path):
+        if not path:
+            return
+        ok = self._external_select(path)
+        if not ok:
+            return
+        self.stack.setCurrentIndex(self.externalspeciesindex)
+
+    def initM2ReferenceScreen(self):
+        widget = QtWidgets.QWidget()
+        layout = QtWidgets.QVBoxLayout(widget)
+        layout.setContentsMargins(40, 40, 40, 40)
+
+        top = QtWidgets.QHBoxLayout()
+        top.addWidget(self.makeResetButton(), alignment=Qt.AlignLeft)
+        top.addStretch()
+        layout.addLayout(top)
+
+        drop = FileDropBox()
+        drop.setObjectName("m2refdrop")
+        drop.setStyleSheet(
+            "QFrame#m2refdrop {"
+            "  border: 3px dashed #006400;"
+            "  border-radius: 16px;"
+            "  background: #ffffff;"
+            "  color: #006400;"
+            "}"
+            "QFrame#m2refdrop[dragover=\"true\"] {"
+            "  border-style: solid;"
+            "  background: #f4fff6;"
+            "}"
+        )
+
+        v = QtWidgets.QVBoxLayout(drop)
+        v.setAlignment(Qt.AlignCenter)
+        v.setSpacing(20)
+
+        title = QtWidgets.QLabel("Drag Reference Fasta here")
+        title.setFont(QtGui.QFont("Arial", 20, QtGui.QFont.Bold))
+        title.setStyleSheet("color:#666; font-size:30px;")
+        title.setAlignment(Qt.AlignCenter)
+
+        v.addWidget(title)
+        layout.addWidget(drop, stretch=1)
+
+        drop.fileDropped.connect(self._m2_reference_loaded)
+
+        self.stack.addWidget(widget)
+        self.m2_reference_index = self.stack.indexOf(widget)
+
+    def initM2ProjectScreen(self):
+        widget = QtWidgets.QWidget()
+        layout = QtWidgets.QVBoxLayout(widget)
+        layout.setContentsMargins(40, 40, 40, 40)
+
+        top = QtWidgets.QHBoxLayout()
+        top.addWidget(self.makeResetButton(), alignment=Qt.AlignLeft)
+        top.addStretch()
+        layout.addLayout(top)
+
+        drop = FileDropBox()
+        drop.setObjectName("m2projdrop")
+        drop.setStyleSheet(
+            "QFrame#m2projdrop {"
+            "  border: 3px dashed #006400;"
+            "  border-radius: 16px;"
+            "  background: #ffffff;"
+            "  color: #006400;"
+            "}"
+            "QFrame#m2projdrop[dragover=\"true\"] {"
+            "  border-style: solid;"
+            "  background: #f4fff6;"
+            "}"
+        )
+
+        v = QtWidgets.QVBoxLayout(drop)
+        v.setAlignment(Qt.AlignCenter)
+        v.setSpacing(20)
+
+        title = QtWidgets.QLabel("Drag Project Fasta here")
+        title.setFont(QtGui.QFont("Arial", 20, QtGui.QFont.Bold))
+        title.setStyleSheet("color:#666; font-size:30px;")
+        title.setAlignment(Qt.AlignCenter)
+
+        note = QtWidgets.QLabel(
+            "Ensure first sequence of this file defines \nyour region of interest"
+        )
+        note.setAlignment(Qt.AlignCenter)
+        note.setStyleSheet("color:#666; font-size:18px;")
+        note.setWordWrap(True)
+
+        v.addWidget(title)
+        v.addWidget(note)
+
+        layout.addWidget(drop, stretch=1)
+
+        drop.fileDropped.connect(self._m2_project_loaded)
+
+        self.stack.addWidget(widget)
+        self.m2_project_index = self.stack.indexOf(widget)
 
     def initExternalSeqScreen(self):
         widget=QtWidgets.QWidget()
@@ -1640,18 +1862,11 @@ class OptWindow(QtWidgets.QWidget):
             self.stack.setCurrentIndex(self.align_screen_index)
         else:
             self.stack.setCurrentIndex(self.homfrag_screen_index)
-    def _external_select(self):
-        msg=QtWidgets.QMessageBox(self)
-        msg.setWindowTitle("External sequences")
-        msg.setIcon(QtWidgets.QMessageBox.Warning)
-        msg.setText("External sequences will only be treated as unaligned.\n\nDo you want to continue?")
-        msg.setStandardButtons(QtWidgets.QMessageBox.Ok|QtWidgets.QMessageBox.Cancel)
-        choice=msg.exec_()
-        if choice==QtWidgets.QMessageBox.Cancel:
-            self.stack.setCurrentIndex(0)
-            return
 
-        fname,_=QtWidgets.QFileDialog.getOpenFileName(self,"Select external FASTA","","All files (*)")
+    def _external_select(self,direct_path):
+
+
+        fname = direct_path
         if not fname:
             self.stack.setCurrentIndex(0)
             return
@@ -1766,7 +1981,7 @@ class OptWindow(QtWidgets.QWidget):
         center=QtWidgets.QVBoxLayout()
         center.setAlignment(Qt.AlignCenter)
 
-        self.extmodetitle=QtWidgets.QLabel("")
+        self.extmodetitle=QtWidgets.QLabel("Reminder: In this mode all data will be treated as unaligned \nand pairwise alignments will be conducted")
         self.extmodetitle.setFont(QtGui.QFont("Arial", 16, QtGui.QFont.Bold))
         self.extmodetitle.setAlignment(Qt.AlignCenter)
         center.addWidget(self.extmodetitle)
@@ -1827,25 +2042,27 @@ class OptWindow(QtWidgets.QWidget):
         self.externalmodeindex=self.stack.indexOf(widget)
 
 
-
     def finishExternalMode(self):
-        if self.extopt1.isChecked():
-            self.exthomologymode=1
-            self.runExternalHomologyAssume()
+        if self.extopt3.isChecked():
+            self.exthomologymode = 3
+            self.openblastsettings()
+            return
+
         elif self.extopt2.isChecked():
             self.exthomologymode=2
-            extfile=self.writeExternalSubset()
+            extfile=self.writeExternalSubset('')
             self._hom_input_fasta=extfile
             self._hom_input_count=self.extcounts
             self.openhomologysettings()
-        else:
-            self.exthomologymode=3
-            if not self.runroot:
-                self.runroot=_mk_run_root(self.infilename)
-            self._blast_db=os.path.join(self.runroot, "external.filtered.fa")
-            self._blast_query=self.infilename
-            self.openblastsettings()
-        print("External homology mode selected:", self.exthomologymode)
+            return
+
+        if self.extopt1.isChecked():
+            self.exthomologymode = 1
+            self.runExternalHomologyAssume()
+            return
+
+        raise RuntimeError("No external homology mode selected")
+
 
 
     def initAlignmentQuestionScreen(self):
@@ -1985,115 +2202,139 @@ class OptWindow(QtWidgets.QWidget):
     def initOptionsScreen(self):
         options_widget=QtWidgets.QWidget()
         main_layout=QtWidgets.QVBoxLayout(options_widget)
-        main_layout.setContentsMargins(40, 40, 40, 40)  
-        ProcLayout=QtWidgets.QHBoxLayout()
-        self.ProcLabel=QtWidgets.QLabel("Number of processors:")
-        self.ProcLabel.setFont(QtGui.QFont("Arial", 12, QtGui.QFont.Bold))
+        main_layout.setContentsMargins(40,40,40,40)
 
-        self.ProcCombo=QtWidgets.QComboBox()
-        max_procs=mp.cpu_count()
-        default_procs=min(4, max_procs)  
-        for i in range(1, max_procs+1):
-            self.ProcCombo.addItem(str(i))
-        self.ProcCombo.setCurrentText(str(default_procs))
-        self.ProcCombo.setSizePolicy(QtWidgets.QSizePolicy.Expanding,
-                             QtWidgets.QSizePolicy.Fixed)
-
-        ProcLayout.addWidget(self.ProcLabel)
-        ProcLayout.addWidget(self.ProcCombo)
-        ProcLayout.addStretch()
         top_layout=QtWidgets.QHBoxLayout()
         self.reset_button=self.makeResetButton()
-
-        self.loaded_label=QtWidgets.QLabel("")
-        self.loaded_label.setFont(QtGui.QFont("Arial", 14, QtGui.QFont.Bold))
-        self.loaded_label.setAlignment(Qt.AlignCenter)
-
         top_layout.addWidget(self.reset_button, alignment=Qt.AlignLeft)
         top_layout.addStretch()
-        top_layout.addWidget(self.loaded_label, alignment=Qt.AlignCenter)
-        top_layout.addStretch()
-        
         main_layout.addLayout(top_layout)
 
-        center_layout=QtWidgets.QVBoxLayout()
-        center_layout.setAlignment(Qt.AlignCenter)
+        self.dropbox=FileDropBox()
+        self.dropbox.setObjectName("projdrop")
+        dlay=QtWidgets.QVBoxLayout(self.dropbox)
+        dlay.setContentsMargins(20,20,20,20)
+        dlay.setAlignment(Qt.AlignCenter)
+        self.drop_label=QtWidgets.QLabel("Drag a project FASTA here")
+        self.drop_label.setAlignment(Qt.AlignCenter)
+        self.drop_label.setWordWrap(True)
+        self.drop_label.setFont(QtGui.QFont("Arial",14,QtGui.QFont.Bold))
+        dlay.addWidget(self.drop_label)
+
+        self.dropbox.setStyleSheet(
+            "QFrame#projdrop{border:2px dashed #006400; border-radius:12px;"
+            "background:#ffffff; color:#006400;}"
+            "QFrame#projdrop[dragover=\"true\"]{border-style:solid; background:#f4fff6;}"
+        )
+
+        self.loaded_label=QtWidgets.QLabel("")
+        self.loaded_label.setFont(QtGui.QFont("Arial",14,QtGui.QFont.Bold))
+        self.loaded_label.setAlignment(Qt.AlignCenter)
 
         MinOverlapLayout=QtWidgets.QHBoxLayout()
         self.MinOverlapLabel=QtWidgets.QLabel("Minimum Overlap:")
-        self.MinOverlapLabel.setFont(QtGui.QFont("Arial", 12, QtGui.QFont.Bold))
+        self.MinOverlapLabel.setFont(QtGui.QFont("Arial",12,QtGui.QFont.Bold))
         self.MinOverlapTextBox=QtWidgets.QLineEdit("100")
         self.MinOverlapTextBox.setFixedWidth(80)
-   #     self.MinOverlapTextBox.textEdited.connect(self.setoverlaplen)
-        self.overlaplen=100 
-        self.hasN_flags={} 
+        self.overlaplen=100
         MinOverlapLayout.addWidget(self.MinOverlapLabel)
         MinOverlapLayout.addWidget(self.MinOverlapTextBox)
         MinOverlapLayout.addStretch()
-        center_layout.addLayout(MinOverlapLayout)
-        center_layout.addSpacing(12)
-        center_layout.addLayout(ProcLayout)
-        center_layout.addSpacing(12)
+
+        ProcLayout=QtWidgets.QHBoxLayout()
+        self.ProcLabel=QtWidgets.QLabel("Number of processors:")
+        self.ProcLabel.setFont(QtGui.QFont("Arial",12,QtGui.QFont.Bold))
+        self.ProcCombo=QtWidgets.QComboBox()
+        max_procs=mp.cpu_count()
+        default_procs=min(4, max_procs)
+        for i in range(1, max_procs+1):
+            self.ProcCombo.addItem(str(i))
+        self.ProcCombo.setCurrentText(str(default_procs))
+        ProcLayout.addWidget(self.ProcLabel)
+        ProcLayout.addWidget(self.ProcCombo)
+        ProcLayout.addStretch()
+
         species_layout=QtWidgets.QHBoxLayout()
         self.species_label=QtWidgets.QLabel("Species Names:")
-        self.species_label.setFont(QtGui.QFont("Arial", 12, QtGui.QFont.Bold))
+        self.species_label.setFont(QtGui.QFont("Arial",12,QtGui.QFont.Bold))
         self.DetectButton=QtWidgets.QRadioButton("Detect")
-        self.DetectButton.setChecked(True)  
+        self.DetectButton.setChecked(True)
         self.DonotdetectButton=QtWidgets.QRadioButton("Do not detect")
         self.AssociateSpButton=QtWidgets.QRadioButton("Add species names by file")
-
         species_layout.addWidget(self.species_label)
         species_layout.addWidget(self.DetectButton)
         species_layout.addWidget(self.DonotdetectButton)
         species_layout.addWidget(self.AssociateSpButton)
 
-        center_layout.addLayout(species_layout)
-        center_layout.addSpacing(12)
         GapLayout=QtWidgets.QHBoxLayout()
         self.GapOpenLabel=QtWidgets.QLabel("Gap Opening Penalty:")
         self.GapOpenLabel.setFont(QtGui.QFont("Arial",12,QtGui.QFont.Bold))
         self.GapOpenSpin=QtWidgets.QSpinBox()
-        self.GapOpenSpin.setRange(1, 100)
+        self.GapOpenSpin.setRange(1,100)
         self.GapOpenSpin.setValue(10)
-
         self.GapExtendLabel=QtWidgets.QLabel("Gap Extension Penalty:")
-        self.GapExtendLabel.setFont(QtGui.QFont("Arial", 12, QtGui.QFont.Bold))
+        self.GapExtendLabel.setFont(QtGui.QFont("Arial",12,QtGui.QFont.Bold))
         self.GapExtendSpin=QtWidgets.QSpinBox()
-        self.GapExtendSpin.setRange(1, 100)
+        self.GapExtendSpin.setRange(1,100)
         self.GapExtendSpin.setValue(1)
-
         GapLayout.addWidget(self.GapOpenLabel)
         GapLayout.addWidget(self.GapOpenSpin)
         GapLayout.addWidget(self.GapExtendLabel)
         GapLayout.addWidget(self.GapExtendSpin)
+
         self.GapGroup=QtWidgets.QWidget()
         self.GapGroup.setLayout(GapLayout)
-        center_layout.addWidget(self.GapGroup)
-
         self.GapGroup.setVisible(False)
+
         self.myDetectSpeciesMode=0
         self.DetectButton.toggled.connect(self.setDetectmode)
         self.DonotdetectButton.toggled.connect(self.setdonotdetectMode)
         self.AssociateSpButton.toggled.connect(self.setspeciesassociateMode)
 
-
-        main_layout.addStretch()  
-        main_layout.addLayout(center_layout)
-        main_layout.addStretch()  
-
-        button_layout=QtWidgets.QHBoxLayout()
-        button_layout.addStretch()
         self.runbtn=QtWidgets.QPushButton("Cluster!")
-        self.runbtn.setFont(QtGui.QFont("Arial", 12, QtGui.QFont.Bold))
+        self.runbtn.setFont(QtGui.QFont("Arial",12,QtGui.QFont.Bold))
         self.runbtn.setFixedWidth(180)
-        self.runbtn.clicked.connect(self.fix_orient) 
-        button_layout.addWidget(self.runbtn)
-        button_layout.addStretch()
-        main_layout.addLayout(button_layout)
+        self.runbtn.clicked.connect(self.fix_orient)
+
+        center_layout=QtWidgets.QVBoxLayout()
+        center_layout.setAlignment(Qt.AlignTop)
+        center_layout.addLayout(MinOverlapLayout)
+        center_layout.addSpacing(12)
+        center_layout.addLayout(ProcLayout)
+        center_layout.addSpacing(16)
+        center_layout.addLayout(species_layout)
+        center_layout.addSpacing(16)
+        center_layout.addWidget(self.GapGroup)
+        center_layout.addStretch()
+        center_layout.addWidget(self.runbtn, alignment=Qt.AlignCenter)
+
+        ratio_layout=QtWidgets.QVBoxLayout()
+        ratio_layout.setSpacing(30)
+        ratio_layout.addWidget(self.dropbox, stretch=3)
+        ratio_layout.addLayout(center_layout, stretch=7)
+
+        main_layout.addLayout(ratio_layout)
 
         options_widget.setLayout(main_layout)
         self.stack.addWidget(options_widget)
         self.opt_screen_index=self.stack.indexOf(options_widget)
+
+        self._opts_disable_list=[
+            self.MinOverlapTextBox,
+            self.ProcCombo,
+            self.DetectButton,
+            self.DonotdetectButton,
+            self.AssociateSpButton,
+            self.GapOpenSpin,
+            self.GapExtendSpin,
+            self.GapGroup,
+            self.runbtn,
+        ]
+        for w in self._opts_disable_list:
+            w.setEnabled(False)
+
+        self.dropbox.fileDropped.connect(self._proj_file_dropped)
+
 
     def initExternalOptionsScreen(self):
         options_widget=QtWidgets.QWidget()
@@ -2107,13 +2348,19 @@ class OptWindow(QtWidgets.QWidget):
         self.extloadedlabel=QtWidgets.QLabel("")
         self.extloadedlabel.setFont(QtGui.QFont("Arial",14,QtGui.QFont.Bold))
         self.extloadedlabel.setAlignment(Qt.AlignCenter)
+        self.extloadedlabel.setTextFormat(QtCore.Qt.RichText)
+        self.extloadedlabel.setMaximumWidth(820) 
+        self.extloadedlabel.setStyleSheet("QLabel { padding: 14px 24px; }")
+
 
         top_layout.addWidget(self.reset_button2, alignment=Qt.AlignLeft)
         top_layout.addStretch()
         top_layout.addWidget(self.extloadedlabel, alignment=Qt.AlignCenter)
         top_layout.addStretch()
+        top_layout.setContentsMargins(0, 10, 0, 10)
 
         main_layout.addLayout(top_layout)
+        main_layout.addSpacing(20)
 
         center_layout=QtWidgets.QVBoxLayout()
         center_layout.setAlignment(Qt.AlignCenter)
@@ -2178,10 +2425,10 @@ class OptWindow(QtWidgets.QWidget):
         GapLayout.addWidget(self.GapExtendLabel)
         GapLayout.addWidget(self.GapExtendSpin2)
         center_layout.addLayout(GapLayout)
-        self.myDetectSpeciesMode2=0
-        self.DetectButton2.toggled.connect(lambda: setattr(self,"myDetectSpeciesMode2",0))
-        self.DonotdetectButton2.toggled.connect(lambda: setattr(self,"myDetectSpeciesMode2",1))
-        self.AssociateSpButton2.toggled.connect(lambda: setattr(self,"myDetectSpeciesMode2",2))
+        self.myDetectSpeciesMode=0
+        self.DetectButton2.toggled.connect(lambda: setattr(self,"myDetectSpeciesMode",0))
+        self.DonotdetectButton2.toggled.connect(lambda: setattr(self,"myDetectSpeciesMode",1))
+        self.AssociateSpButton2.toggled.connect(lambda: setattr(self,"myDetectSpeciesMode",2))
 
         main_layout.addStretch()
         main_layout.addLayout(center_layout)
@@ -2201,6 +2448,89 @@ class OptWindow(QtWidgets.QWidget):
         self.stack.addWidget(options_widget)
         self.externaloptsindex=self.stack.indexOf(options_widget)
 
+
+    def _extproj_loaded(self, path):
+        self.infilename = path
+        self.indir = os.path.dirname(os.path.abspath(path))
+        self.runroot = _mk_run_root(path)
+
+        self.loadseqs(path)
+        n = self.seqcounts
+        if self.sequences:
+            first_id = next(iter(self.sequences.keys()))
+            first_len = len(self.sequences[first_id])
+        else:
+            first_id = "?"
+            first_len = 0
+
+        self.ext_proj_label.setText(
+            f"Loaded: ({n} sequences)"
+            f"Reference for length: {first_id}\n"
+            f"Length: {first_len}\n"
+        )
+
+
+
+    def _extref_loaded(self, path):
+        self.referenceinfilename = path
+        self.externalinfilename = path
+        ok = self._external_select(path)
+        if not ok:
+            return
+        self.stack.setCurrentIndex(self.externalspeciesindex)
+
+
+
+
+    def _proj_file_dropped(self, path):
+        if not path:
+            return
+        self.infilename=path
+        self.indir=os.path.dirname(os.path.abspath(path))
+        self.runroot=_mk_run_root(path)
+        self.loadseqs(path)
+        self.projectcount=self.seqcounts
+        n=self.seqcounts
+        if len(self.lengths) > 1:
+            self.mode = "hom"
+            self.GapGroup.setVisible(True)
+            mtxt = "pairwise alignments"
+        else:
+            msg = QtWidgets.QMessageBox(self)
+            msg.setWindowTitle("Aligned file?")
+            msg.setIcon(QtWidgets.QMessageBox.Question)
+            msg.setText(
+                "All sequences have the same length.\n"
+                "Proceed as aligned?\n\n"
+                "If 'No' is selected, pairwise alignments will be conducted."
+            )
+            msg.setStandardButtons(QtWidgets.QMessageBox.Yes | QtWidgets.QMessageBox.No)
+            choice = msg.exec_()
+
+            if choice == QtWidgets.QMessageBox.Yes:
+                self.mode = "aligned"
+                self.GapGroup.setVisible(False)
+                mtxt = "aligned (no extra alignments)"
+            else:
+                self.mode = "hom"
+                self.GapGroup.setVisible(True)
+                mtxt = "pairwise alignments"
+
+        self.drop_label.setText(
+            "Loaded file with "+str(n)+" sequences\nMode: "+mtxt
+        )
+        for w in getattr(self,"_opts_disable_list",[]):
+            w.setEnabled(True)
+        self.updaterunbuttonformodes()
+
+
+    def _ext_proj_loaded(self, path):
+        self.ext_proj_label.setText("Loaded:\n"+os.path.basename(path))
+        self.infilename=path
+
+    def _ext_ref_loaded(self, path):
+        self.ext_ref_label.setText("Loaded:\n"+os.path.basename(path))
+        self.referenceinfilename=path
 
     def initExternalSpeciesScreen(self):
         widget=QtWidgets.QWidget()
@@ -2251,9 +2581,100 @@ class OptWindow(QtWidgets.QWidget):
         for sp,cb in self.extspecieschecks.items():
             cb.setVisible(text in sp.lower() or text=="")
 
+    def _makemodebtn(self, text):
+        b=QtWidgets.QPushButton(text)
+        b.setObjectName("modebtn")
+        b.setCursor(QtGui.QCursor(QtCore.Qt.PointingHandCursor))
+        b.setMinimumHeight(70)
+        b.setSizePolicy(QtWidgets.QSizePolicy.Expanding, QtWidgets.QSizePolicy.Fixed)
+        b.setStyleSheet("text-align:center;")
+        return b
+    def _choose_fasta(self,caption):
+        fn,_=QtWidgets.QFileDialog.getOpenFileName(
+            self,caption,"",
+            "FASTA (*.fa *.fasta *.fas);;All files (*)"
+        )
+        if not fn:
+            return None
+        self.infilename=fn
+        self.indir=os.path.dirname(os.path.abspath(fn))
+        self.runroot=_mk_run_root(fn)
+        return fn
+
+    def _start_proj(self):
+        self.mode=None
+        self.drop_label.setText("Drag a project\nFASTA here")
+        self.loaded_label.setText("")
+        if hasattr(self,"opts_panel"):
+            self.opts_panel.setVisible(False)
+        self.GapGroup.setVisible(False)
+        self.runbtn.setEnabled(False)
+        self.stack.setCurrentIndex(self.opt_screen_index)
+
+
+    def _start_proj_ext(self):
+        self._force_mode_on_load = "hom"
+        self.stack.setCurrentIndex(self.m2_project_index)
+    def _start_ext_nonaln(self):
+        self._force_mode_on_load = "hom"
+        self.stack.setCurrentIndex(self.m3_project_index)
+
     def toggle_all_species(self,state):
         for cb in self.extspecies_checks.values():
             cb.setChecked(state==QtCore.Qt.Checked)
+    def initM3ProjectScreen(self):
+        widget = QtWidgets.QWidget()
+        layout = QtWidgets.QVBoxLayout(widget)
+        layout.setContentsMargins(40, 40, 40, 40)
+
+        top = QtWidgets.QHBoxLayout()
+        top.addWidget(self.makeResetButton(), alignment=Qt.AlignLeft)
+        top.addStretch()
+        layout.addLayout(top)
+
+        drop = FileDropBox()
+        drop.setObjectName("m3projdrop")
+        drop.setStyleSheet(
+            "QFrame#m3projdrop {"
+            "  border: 3px dashed #8B0000;"
+            "  border-radius: 16px;"
+            "  background: #ffffff;"
+            "  color: #8B0000;"
+            "}"
+            "QFrame#m3projdrop[dragover=\"true\"] {"
+            "  border-style: solid;"
+            "  background: #fff5f5;"
+            "}"
+        )
+
+        v = QtWidgets.QVBoxLayout(drop)
+        v.setAlignment(Qt.AlignCenter)
+        v.setSpacing(20)
+
+        title = QtWidgets.QLabel("Drag Project fasta here")
+        title.setFont(QtGui.QFont("Arial", 20, QtGui.QFont.Bold))
+        title.setStyleSheet("color:#666; font-size:30px;")
+        title.setAlignment(Qt.AlignCenter)
+
+        note = QtWidgets.QLabel(
+            "This mode will try to clean up messy data.\n\n"
+            "IMPORTANT:\n"
+            "• The FIRST sequence must be the reference barcode\n"
+            "• It must represent the correct target region\n"
+        )
+        note.setAlignment(Qt.AlignCenter)
+        note.setWordWrap(True)
+        note.setStyleSheet("color:#666; font-size:18px;")
+
+        v.addWidget(title)
+        v.addWidget(note)
+
+        layout.addWidget(drop, stretch=1)
+
+        drop.fileDropped.connect(self._m3_project_loaded)
+
+        self.stack.addWidget(widget)
+        self.m3_project_index = self.stack.indexOf(widget)
 
     def finish_external_species(self):
         self.extspeciesselected=[sp for sp,cb in self.extspecieschecks.items() if cb.isChecked()]
@@ -2267,13 +2688,25 @@ class OptWindow(QtWidgets.QWidget):
 
         self.extsequences=filtered
         self.extcounts=len(filtered)
+        self.extafter_species_count=self.extcounts
 
         print("After filtering, external sequences:", self.extcounts)
         self.extmodetitle.setText(
             f"External sequences before filtering: {self.extbeforecount}\n"
-            f"After filtering: {self.extcounts}"
+            f"After species filtering: {self.extcounts}"
         )
+        if self.extsequences:
+            first_ext_id = next(iter(self.extsequences.keys()))
+            first_ext_len = len(self.extsequences[first_ext_id])
+            count = len(self.extsequences)
+        else:
+            first_ext_id = "?"
+            first_ext_len = 0
+            count = 0
+
+
         self.stack.setCurrentIndex(self.externalmodeindex)
+
 
     def runExternalHomologyAssume(self):
         if not self.runroot:
@@ -2291,6 +2724,8 @@ class OptWindow(QtWidgets.QWidget):
                 out.write(">"+sid+"\n")
                 for i in range(0,len(seq),80):
                     out.write(seq[i:i+80]+"\n")
+        self.extafter_homology_count=len(self.extsequences)
+
 
         self.infilename=combpath
         self.mode="hom"
@@ -2301,10 +2736,10 @@ class OptWindow(QtWidgets.QWidget):
             str(len(self.extsequences))+" external sequences"
         )
         self.stack.setCurrentIndex(self.externaloptsindex)
-    def writeExternalSubset(self):
+    def writeExternalSubset(self,subdir):
         if not self.runroot:
             self.runroot=_mk_run_root(self.infilename)
-        extpath=os.path.join(self.runroot,"external.filtered.fa")
+        extpath=os.path.join(self.runroot,subdir,"external.filtered.fa")
         with open(extpath,"w") as out:
             for sid,seq in self.extsequences.items():
                 out.write(">"+sid+"\n")
@@ -2369,8 +2804,6 @@ class OptWindow(QtWidgets.QWidget):
             self.GapExtendSpin2.setValue(1)
         except Exception:
             pass
-        try: self.loaded_label.setText("")
-        except: pass
         try: self.extloadedlabel.setText("")
         except: pass
         try: self.exttitle.setText("")
@@ -2390,12 +2823,16 @@ class OptWindow(QtWidgets.QWidget):
             del self._force_mode_on_load
         self._prev_cwd=None
         self.runroot=None
+        self.extafter_species_count=0
+        self.extafter_homology_count=0
         self.stack.setCurrentIndex(0)
 
 
     def openblastsettings(self):
         blast_dir=os.path.join(self.runroot, "blast")
         os.makedirs(blast_dir, exist_ok=True)
+        self._blast_db=os.path.join(self.runroot,"blast", "external.filtered.fa")
+        ext_basename = os.path.basename(self._blast_db)
 
         self.bmsg=HomologyJobDialog(
             self,
@@ -2412,7 +2849,7 @@ class OptWindow(QtWidgets.QWidget):
         )
         if dlg.exec_()==QtWidgets.QDialog.Accepted:
             self._blast_opts=dlg.params()
-            extfile=self.writeExternalSubset()
+            extfile=self.writeExternalSubset("blast")
             self._blast_query=self.infilename
             self._blast_db=extfile
 
@@ -2451,12 +2888,12 @@ class OptWindow(QtWidgets.QWidget):
 
     def blastFinished(self, rc, outprefix):
         if rc != 0:
-            QtWidgets.QMessageBox.critical(self, "BLAST search", "BLAST failed.")
+            QtWidgets.QMessageBox.critical(self, "BLAST search", "BLAST failed. See log")
             return
 
         finalfa=outprefix+".final.fa"
         if not os.path.exists(finalfa):
-            QtWidgets.QMessageBox.warning(self, "BLAST search", "No final.fa was produced.")
+            QtWidgets.QMessageBox.warning(self, "BLAST search", "No final.fa was produced. See log.")
             return
 
         try:
@@ -2530,15 +2967,22 @@ class OptWindow(QtWidgets.QWidget):
                 for i in range(0,len(seq),80):
                     out.write(seq[i:i+80]+"\n")
 
+        self.extafter_homology_count=self.extcounts
+
 
         self.infilename=combpath
         self.mode="hom"
         self.loadseqs(combpath)
 
         self.extloadedlabel.setText(
-            "Loaded "+str(self.projectcount)+" project sequences+"+
-            str(self.extcounts)+" external sequences"
+            "<div style='line-height:1.55;'>"
+            f"Project FASTA: {self.projectcount} sequences<br>"
+            f"External FASTA (before species filtering): {self.extbeforecount} sequences<br>"
+            f"External FASTA (after species filtering): {self.extafter_species_count} sequences<br>"
+            f"External FASTA (after additional filtering): {self.extafter_homology_count} sequences"
+            "</div>"
         )
+
         self.stack.setCurrentIndex(self.externaloptsindex)
         try:
             if hasattr(self, "hmsg"):
@@ -2588,7 +3032,7 @@ class OptWindow(QtWidgets.QWidget):
             try:
                 self.hmsg.appendLine("Cancellation requested…")
                 self.hmsg.setSubtitle("Cancelling… Please wait")
-                self.hmsg.progress.setRange(0, 0)  # bounce mode
+                self.hmsg.progress.setRange(0, 0)  
                 QtWidgets.QApplication.processEvents()
             except Exception:
                 pass
@@ -2687,10 +3131,9 @@ class OptWindow(QtWidgets.QWidget):
         self.mode="hom"
         self.loadseqs(combpath)
 
-        self.extloadedlabel.setText(
-            "Loaded "+str(self.projectcount)+" project sequences+"+
-            str(_count_fasta_records(finalfa))+" external sequences"
-        )
+        self.extloadedlabel.setText("<div style='line-height:1.55;'>"
+            f"Loaded {self.projectcount} project sequences {str(_count_fasta_records(finalfa))} external sequences""</div>")
+
         self.stack.setCurrentIndex(self.externaloptsindex)
 
     def _homologyFinish(self, summary: str):
@@ -2742,7 +3185,15 @@ class OptWindow(QtWidgets.QWidget):
         self.GapGroup.setVisible(True) 
         self._force_mode_on_load="hom"
         self.loadseqs(final_fa)
-        self.stack.setCurrentIndex(self.opt_screen_index)
+        post_filter_count = self.seqcounts
+
+        self.extloadedlabel.setText(
+            "Number of sequences before filtering: "
+            f"{self.pre_filter_count}<br>"
+            "Number of sequences after filtering: "
+            f"{post_filter_count}"
+        )
+        self.stack.setCurrentIndex(self.externaloptsindex)
         try:
             self.updaterunbuttonformodes()
         except Exception:
@@ -2780,8 +3231,11 @@ class OptWindow(QtWidgets.QWidget):
                 l=infile.readlines()
                 for each in l:
                     m=each.strip().split("\t")
+                    print(each)
                     self.spassocs2[m[0]]=m[1]
+            print("2",len(self.spassocs2),self.spassocs2)
         except:
+            print("2not working")
             pass
 
     def goBackToFileSelection(self):
@@ -2793,18 +3247,10 @@ class OptWindow(QtWidgets.QWidget):
 
 
     def dragEnterEvent(self, event):
-        if event.mimeData().hasUrls():
-            event.acceptProposedAction()
+        event.ignore()
 
     def dropEvent(self, event):
-        urls=event.mimeData().urls()
-        if urls:
-            self.infilename=str(urls[0].toLocalFile())  
-            self.indir=os.path.dirname(os.path.abspath(self.infilename))
-            self.runroot=_mk_run_root(self.infilename)
-
-            print("Selected:", self.infilename)
-            self.stack.setCurrentIndex(self.external_screen_index)
+        event.ignore()
 
     def loadseqs(self, infilename):
         self.seqiddict, self.seqdict, self.sequences={}, {}, {}
@@ -2846,7 +3292,6 @@ class OptWindow(QtWidgets.QWidget):
                     self.seqcounts+=1
             self.seqdict1=self.seqdict
 
-            self.loaded_label.setText(f"Loaded {self.seqcounts} sequences")
             print(f"[loadseqs] alignment length={self.len_aln}")
 
         except Exception as e:
@@ -2941,6 +3386,7 @@ class OptWindow(QtWidgets.QWidget):
                     self.spassocs[seqid]=self.spassocs2[self.seqiddict[seqid]]
                 except KeyError:
                     self.spassocs[seqid]=""
+            print(len(self.spassocs),self.spassocs)
 
         self.pdist()
 
@@ -3047,12 +3493,8 @@ class OptWindow(QtWidgets.QWidget):
         self.dist_starter.finishedWithCancel.connect(_on_cancel_finish)
         self.dist_starter.finishedWithError.connect(lambda msg: (self.msgBox.close(),QtWidgets.QMessageBox.critical(self, "Error", msg)))
         cancel_button.clicked.connect(self.dist_starter.cancel)
-
-
         self.dist_starter.start()
 
-
-        
     def cancel_task(self):
         if getattr(self, "dist_starter", None):
             try:

@@ -16,4 +16,7 @@ You can download the latest version of IntegraTax from the GitHub repository:
 
 👉 [Download IntegraTax](https://github.com/asrivathsan/IntegraTax/releases) 
 
+Note: "IntegraTaxViz" in the releases only contain the visualisation module of IntegraTax. For the full package, download "IntegraTax_linux", "IntegraTax_OSX", or "IntegraTax_win" based on which operating system you use.
+
+
 ---
